@@ -1,0 +1,125 @@
+- hosts: amazon_*
+  become_user: ubuntu
+  tasks:
+   - name: Editing core.xml File
+     
+     ansible.builtin.blockinfile:
+       dest: /usr/local/hadoop/etc/hadoop/core-site.xml
+       marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+       insertafter: "<configuration>"
+       block: |
+         <property>
+         <name>fs.defaultFS</name>
+         <value>hdfs://ec2-3-83-94-52.compute-1.amazonaws.com:9000</value>
+         </property>
+       backup: yes
+       owner: ubuntu
+
+   - name: Editing mapred.xml File
+     
+     ansible.builtin.blockinfile:
+       dest: /usr/local/hadoop/etc/hadoop/mapred-site.xml
+       marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+       insertafter: "<configuration>"
+       block: |
+         <property>
+         <name>mapred.job.tracker</name>
+         <value>ec2-3-83-94-52.compute-1.amazonaws.com:54311</value>
+         </property>
+         <property>
+         <name>mapreduce.framework.name</name>
+         <value>yarn</value>
+         </property>
+       backup: yes
+       owner: ubuntu
+
+
+   - name: Editing hdfs.xml File
+     
+     ansible.builtin.blockinfile:
+       dest: /usr/local/hadoop/etc/hadoop/hdfs-site.xml
+       marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+       insertafter: "<configuration>"
+       block: |
+         <property>
+         <name>dfs.replication</name>
+         <value>3</value>
+         </property>
+         <property>
+         <name>dfs.namenode.name.dir</name>
+         <value>file:///usr/local/hadoop/hdfs/data</value>
+         </property>
+         <property>
+         <name>dfs.datanode.data.dir</name>
+         <value>file:///usr/local/hadoop/hdfs/data</value>
+         </property>
+       backup: yes
+       owner: ubuntu
+
+   - name: Editing yarn-site.xml File
+     
+     ansible.builtin.blockinfile:
+       dest: /usr/local/hadoop/etc/hadoop/yarn-site.xml
+       marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+       insertafter: "<configuration>"
+       block: |
+         <property>
+         <name>yarn.nodemanager.aux-services</name>
+         <value>mapreduce_shuffle</value>
+         </property>
+         <property>
+         <name>yarn.nodemanager.aux-services.mapreduce.shuffle.class</name>
+         <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+         </property>
+         <property>
+         <name>yarn.resourcemanager.hostname</name>
+         <value>ec2-3-83-94-52.compute-1.amazonaws.com</value>
+         </property>
+       backup: yes
+       owner: ubuntu
+
+   - name: Removing some lines in masters start File
+     ansible.builtin.lineinfile:
+       path: /usr/local/hadoop/etc/hadoop/masters
+       regexp: 'localhost'
+       line: ''
+       backrefs: yes
+       owner: ubuntu
+
+   - name: Removing some lines in slaves start File
+     ansible.builtin.lineinfile:
+       path: /usr/local/hadoop/etc/hadoop/workers
+       regexp: 'localhost'
+       line: ''
+       backrefs: yes
+       owner: ubuntu
+
+
+
+   - name: Modifying masters file
+     ansible.builtin.blockinfile:
+       dest: /usr/local/hadoop/etc/hadoop/masters
+       insertafter: EOF
+       block: |
+         ec2-3-83-94-52.compute-1.amazonaws.com
+       backup: yes
+       owner: ubuntu
+
+   - name: Modifying slaves file
+     
+     ansible.builtin.blockinfile:
+       dest: /usr/local/hadoop/etc/hadoop/workers
+       insertafter: EOF
+       block: |
+         ec2-54-87-91-120.compute-1.amazonaws.com
+         ec2-35-171-25-66.compute-1.amazonaws.com
+         ec2-54-167-221-216.compute-1.amazonaws.com
+       backup: yes
+       owner: ubuntu
+
+- hosts: amazon_1
+  become: yes
+  tasks:
+ 
+   - name: Rebooting Machines
+     reboot:
