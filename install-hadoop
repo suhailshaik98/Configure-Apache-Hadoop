@@ -1,0 +1,213 @@
+- hosts: amazon_*
+  become: yes
+  pre_tasks:
+   - name: Run the equivalent of "apt-get update" as a separate step
+     apt:
+       update_cache: yes
+
+   - name: Installing java apt
+     apt:
+       name: openjdk-8-jdk-headless
+       state: present
+
+   - name: Get apache hadoop
+     get_url: 
+       url: https://archive.apache.org/dist/hadoop/common/hadoop-3.1.1/hadoop-3.1.1.tar.gz
+       dest: /home/ubuntu
+
+   - name: Extract  hadoop
+     ansible.builtin.unarchive:
+       src: /home/ubuntu/hadoop-3.1.1.tar.gz
+       dest: /home/ubuntu
+       remote_src: True
+       owner: ubuntu
+
+   - name: removing existing hadoop file
+     raw: rm -r -f hadoop
+
+
+
+   - name: changing directory from hadoop-3.1.1 to hadoop
+     raw: mv hadoop-3.1.1 hadoop/
+
+   - name: Change permission 
+     ansible.builtin.file:
+       path: /home/ubuntu/hadoop
+       state: directory
+       mode: '0755'
+       owner: ubuntu
+   - name: Make dir hdfstmp
+     ansible.builtin.file:
+       path: /home/ubuntu/hadoop/hdfs/data
+       state: directory
+       mode: '0700'
+       owner: ubuntu
+
+
+   - name: Modifying hosts file     
+     ansible.builtin.copy:
+       src: /etc/hosts
+       dest: /etc/hosts
+
+   - name: Editing Bash File
+     
+     ansible.builtin.blockinfile:
+       dest: .bashrc
+       insertafter: EOF
+       block: |
+         export HADOOP_HOME=/usr/local/hadoop
+         export PATH=$PATH:$HADOOP_HOME/bin
+         export PATH=$PATH:$HADOOP_HOME/sbin
+         export HADOOP_MAPRED_HOME=${HADOOP_HOME}
+         export HADOOP_COMMON_HOME=${HADOOP_HOME}
+         export HADOOP_HDFS_HOME=${HADOOP_HOME}
+         export YARN_HOME=${HADOOP_HOME}
+       backup: yes
+   - name: Editing hadoop-env.sh
+     
+     ansible.builtin.lineinfile:
+       dest: /home/ubuntu/hadoop/etc/hadoop/hadoop-env.sh
+       insertafter: EOF
+       line: export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+       backup: yes
+       owner: ubuntu
+
+
+
+  post_tasks:
+   - name: Editing core.xml File
+     
+     ansible.builtin.blockinfile:
+       dest: /home/ubuntu/hadoop/etc/hadoop/core-site.xml
+       marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+       insertafter: "<configuration>"
+       block: |
+         <property>
+         <name>fs.defaultFS</name>
+         <value>hdfs://amazon_1:9000</value>
+         </property>
+       backup: yes
+       owner: ubuntu
+
+   - name: Editing mapred.xml File
+     
+     ansible.builtin.blockinfile:
+       dest: /home/ubuntu/hadoop/etc/hadoop/mapred-site.xml
+       marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+       insertafter: "<configuration>"
+       block: |
+         <property>
+         <name>mapred.job.tracker</name>
+         <value>amazon_1:54311</value>
+         </property>
+         <property>
+         <name>mapreduce.framework.name</name>
+         <value>yarn</value>
+         </property>
+       backup: yes
+       owner: ubuntu
+
+
+   - name: Editing hdfs.xml File
+     
+     ansible.builtin.blockinfile:
+       dest: /home/ubuntu/hadoop/etc/hadoop/hdfs-site.xml
+       marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+       insertafter: "<configuration>"
+       block: |
+         <property>
+         <name>dfs.replication</name>
+         <value>3</value>
+         </property>
+         <property>
+         <name>dfs.namenode.name.dir</name>
+         <value>file:///usr/local/hadoop/hdfs/data</value>
+         </property>
+         <property>
+         <name>dfs.datanode.data.dir</name>
+         <value>file:///usr/local/hadoop/hdfs/data</value>
+         </property>
+       backup: yes
+       owner: ubuntu
+
+   - name: Editing yarn-site.xml File
+     
+     ansible.builtin.blockinfile:
+       dest: /home/ubuntu/hadoop/etc/hadoop/yarn-site.xml
+       marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+       insertafter: "<configuration>"
+       block: |
+         <property>
+         <name>yarn.nodemanager.aux-services</name>
+         <value>mapreduce_shuffle</value>
+         </property>
+         <property>
+         <name>yarn.nodemanager.aux-services.mapreduce.shuffle.class</name>
+         <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+         </property>
+         <property>
+         <name>yarn.resourcemanager.hostname</name>
+         <value>amazon_1</value>
+         </property>
+       backup: yes
+       owner: ubuntu
+
+   - name: Make dir hadoop
+     raw: sudo chown ubuntu:ubuntu -R hadoop/hdfs/data
+   - name: Make dir hadoop2
+     raw: chmod 700 hadoop/hdfs/data
+
+   - name: create file masters
+     raw: touch /home/ubuntu/hadoop/etc/hadoop/masters
+
+
+   - name: Modifying masters file
+     ansible.builtin.blockinfile:
+       dest: /home/ubuntu/hadoop/etc/hadoop/masters
+       insertafter: EOF
+       block: |
+         amazon_1
+       backup: yes
+       owner: ubuntu
+
+   - name: Modifying slaves file
+     
+     ansible.builtin.blockinfile:
+       dest: /home/ubuntu/hadoop/etc/hadoop/workers
+       insertafter: EOF
+       block: |
+         amazon_2
+         amazon_3
+         amazon_4
+       backup: yes
+       owner: ubuntu
+   - name: Transferring files to usr/local directory
+     raw: mv hadoop /usr/local/hadoop
+
+
+- hosts: amazon_1
+  
+  tasks:
+   - name: Changing permissions of the key
+     copy:
+       src: /cst4570_suhail.pem
+       dest: /home/ubuntu/
+       mode: '400'
+       owner: ubuntu
+
+   - name: Returning to home
+     raw: cd /home/ubuntu
+
+   - name: Evaluating the authentication agent & adding the key...
+     shell: |
+       eval "$(ssh-agent)"
+       ssh-add "cst4570_suhail.pem"
+
+   - name: SSH keyscan adding amazon_2
+     raw:  ssh-keyscan -t rsa -H amazon_2  >> ~/.ssh/known_hosts
+
+   - name: SSH keyscan adding amazon_3
+     raw:  ssh-keyscan -t rsa -H amazon_3  >> ~/.ssh/known_hosts
+
+   - name: SSH keyscan adding amazon_4
+     raw:  ssh-keyscan -t rsa -H amazon_4  >> ~/.ssh/known_hosts
