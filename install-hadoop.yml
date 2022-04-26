@@ -62,6 +62,12 @@
          export HADOOP_COMMON_HOME=${HADOOP_HOME}
          export HADOOP_HDFS_HOME=${HADOOP_HOME}
          export YARN_HOME=${HADOOP_HOME}
+         export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
+         export SPARK_HOME=/usr/local/spark
+         export PYSPARK_PYTHON=python3
+         export PATH=$PATH:$SPARK_HOME/bin
+         export LD_LIBRARY_PATH=$HADOOP_HOME/lib/native:$LD_LIBRARY_PATH
+         export PYTHONPATH=$SPARK_HOME/python:$SPARK_HOME/python/build:$PYTHONPATH
        backup: yes
    - name: Editing hadoop-env.sh
      
@@ -186,7 +192,7 @@
 
 
 - hosts: amazon_1
-  
+  become: yes
   tasks:
    - name: Changing permissions of the key
      copy:
@@ -194,20 +200,18 @@
        dest: /home/ubuntu/
        mode: '400'
        owner: ubuntu
+   - name: Installing jupyter notebook
+     apt:
+       name: jupyter-notebook
+       state: present
+   - name: Installing pip
+     apt:
+       name: python3-pip
+       state: present
+- hosts: amazon_1
+  become_user: ubuntu
+  tasks:
+   - name: Installing pip
+     pip:
+       name: findspark
 
-   - name: Returning to home
-     raw: cd /home/ubuntu
-
-   - name: Evaluating the authentication agent & adding the key...
-     shell: |
-       eval "$(ssh-agent)"
-       ssh-add "cst4570_suhail.pem"
-
-   - name: SSH keyscan adding amazon_2
-     raw:  ssh-keyscan -t rsa -H amazon_2  >> ~/.ssh/known_hosts
-
-   - name: SSH keyscan adding amazon_3
-     raw:  ssh-keyscan -t rsa -H amazon_3  >> ~/.ssh/known_hosts
-
-   - name: SSH keyscan adding amazon_4
-     raw:  ssh-keyscan -t rsa -H amazon_4  >> ~/.ssh/known_hosts
