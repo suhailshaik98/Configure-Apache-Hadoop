@@ -10,7 +10,7 @@
        block: |
          <property>
          <name>fs.defaultFS</name>
-         <value>hdfs://ec2-3-83-94-52.compute-1.amazonaws.com:9000</value>
+         <value>hdfs://ec2-3-93-162-50.compute-1.amazonaws.com:9000</value>
          </property>
        backup: yes
        owner: ubuntu
@@ -24,7 +24,7 @@
        block: |
          <property>
          <name>mapred.job.tracker</name>
-         <value>ec2-3-83-94-52.compute-1.amazonaws.com:54311</value>
+         <value>ec2-3-93-162-50.compute-1.amazonaws.com:54311</value>
          </property>
          <property>
          <name>mapreduce.framework.name</name>
@@ -53,6 +53,10 @@
          <name>dfs.datanode.data.dir</name>
          <value>file:///usr/local/hadoop/hdfs/data</value>
          </property>
+         <property>
+         <name>dfs.permissions</name>
+         <value>false</value>
+         </property>
        backup: yes
        owner: ubuntu
 
@@ -73,17 +77,9 @@
          </property>
          <property>
          <name>yarn.resourcemanager.hostname</name>
-         <value>ec2-3-83-94-52.compute-1.amazonaws.com</value>
+         <value>ec2-3-93-162-50.compute-1.amazonaws.com</value>
          </property>
        backup: yes
-       owner: ubuntu
-
-   - name: Removing some lines in masters start File
-     ansible.builtin.lineinfile:
-       path: /usr/local/hadoop/etc/hadoop/masters
-       regexp: 'localhost'
-       line: ''
-       backrefs: yes
        owner: ubuntu
 
    - name: Removing some lines in slaves start File
@@ -101,7 +97,7 @@
        dest: /usr/local/hadoop/etc/hadoop/masters
        insertafter: EOF
        block: |
-         ec2-3-83-94-52.compute-1.amazonaws.com
+         ec2-3-93-162-50.compute-1.amazonaws.com
        backup: yes
        owner: ubuntu
 
@@ -111,15 +107,14 @@
        dest: /usr/local/hadoop/etc/hadoop/workers
        insertafter: EOF
        block: |
-         ec2-54-87-91-120.compute-1.amazonaws.com
-         ec2-35-171-25-66.compute-1.amazonaws.com
-         ec2-54-167-221-216.compute-1.amazonaws.com
+         ec2-34-203-212-183.compute-1.amazonaws.com
+         ec2-18-234-238-2.compute-1.amazonaws.com
+         ec2-3-91-151-83.compute-1.amazonaws.com
        backup: yes
        owner: ubuntu
 
-- hosts: amazon_1
+- hosts: amazon_*
   become: yes
-  tasks:
- 
+  tasks: 
    - name: Rebooting Machines
      reboot:
