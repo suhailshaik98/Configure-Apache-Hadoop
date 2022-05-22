@@ -68,5 +68,4 @@
      pip:
        name: numpy
        executable: pip3    
-   - name: Rebooting Machines
-     reboot:
+
