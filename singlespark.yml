@@ -1,7 +1,6 @@
 - hosts: amazon_1
   become: yes
   tasks:
-
    - name: Get apache spark
      get_url: 
        url: https://dlcdn.apache.org/spark/spark-2.4.8/spark-2.4.8-bin-hadoop2.7.tgz
@@ -12,7 +11,7 @@
        dest: /home/ubuntu
    - name: Extract spark
      ansible.builtin.unarchive:
-       src: /home/ubuntu/spark-3.0.3-bin-hadoop2.7.tgz
+       src: /home/ubuntu/spark-2.4.8-bin-hadoop2.7.tgz
        dest: /home/ubuntu
        remote_src: True
        owner: ubuntu
@@ -22,7 +21,7 @@
        dest: /home/ubuntu
        remote_src: True
        owner: ubuntu
-   - name: Editing Bash File 
+   - name: Extract spark
      ansible.builtin.blockinfile:
        dest: .bashrc
        insertafter: EOF
