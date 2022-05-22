@@ -1,0 +1,39 @@
+- hosts: amazon_*
+  become: yes
+  tasks:
+   - name: Installing zip apt
+     apt:
+       name: zip
+       state: present
+   - name: Get apache spark
+     get_url: 
+       url: https://dlcdn.apache.org/spark/spark-2.4.8/spark-2.4.8-bin-hadoop2.7.tgz
+       dest: /home/ubuntu
+   - name: Get apache sparkdl
+     get_url: 
+       url: https://github.com/databricks/spark-deep-learning/archive/154e7a68dffc9e94d83099216e8d1b98d5a0f566.zip
+       dest: /home/ubuntu
+   - name: Extract spark
+     ansible.builtin.unarchive:
+       src: /home/ubuntu/spark-2.4.8-bin-hadoop2.7.tgz
+       dest: /home/ubuntu
+       remote_src: True
+       owner: ubuntu
+   - name: Extract sparkdl
+     ansible.builtin.unarchive:
+       src: /home/ubuntu/spark-deep-learning-154e7a68dffc9e94d83099216e8d1b98d5a0f566.zip
+       dest: /home/ubuntu
+       remote_src: True
+       owner: ubuntu
+   - name: changing directory from spark-2.4.8 to spark
+     raw: mv spark-2.4.8-bin-hadoop2.7 spark/
+   - name: changing directory from sparkdl to spark
+     raw: mv spark-deep-learning-154e7a68dffc9e94d83099216e8d1b98d5a0f566 deep-learning:1.5.0-spark2.4-s_2.1/
+   - name: changing directory from spark conf template to spark conf
+     raw: mv spark/conf/spark-defaults.conf.template spark/conf/spark-defaults.conf
+   - name: removing old spark file
+     raw: rm -r --f /usr/local/spark
+   - name: Transferring files to usr/local directory
+     raw: mv spark /usr/local/spark
+   - name: Transferring files to usr/local directory
+     raw: mv deep-learning:1.5.0-spark2.4-s_2.1 /usr/local/spark/deep-learning:1.5.0-spark2.4-s_2.1/ 
