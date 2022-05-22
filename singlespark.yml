@@ -119,5 +119,17 @@
      pip:
        name: jieba
        executable: pip2
+   - name: Installing keras
+     pip:
+       name: keras==2.1.5
+       executable: pip3 
+   - name: Installing matplotlib
+     pip:
+       name: matplotlib
+       executable: pip2
+   - name: Installing numpy
+     pip:
+       name: numpy
+       executable: pip3    
    - name: Rebooting Machines
      reboot:
