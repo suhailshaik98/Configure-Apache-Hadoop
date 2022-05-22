@@ -72,15 +72,18 @@
      apt:
        name: python3-pip
        state: present
-
+   - name: Installing pip
+     apt:
+       name: python-pip
+       state: present
    - name: Installing findspark
      pip:
        name: findspark
-   - name: Installing wrapt
+   - name: Installing tensorflow1.4.1
      pip:
        name: tensorflow==1.4.1
        executable: pip3
-   - name: Installing wrapt
+   - name: Installing tensorframes
      pip:
        name: tensorframes
        executable: pip3
