@@ -76,32 +76,31 @@
      pip:
        name: wrapt
        executable: pip3
-   - name: Installing wrapt
+   - name: Installing pillow
      pip:
        name: pillow==5.1.0
        executable: pip3
-    - name: Installing wrapt
+   - name: Installing pandas
      pip:
        name: pandas==1.1.5
        executable: pip3
-    - name: Installing wrapt
+   - name: Installing h5py
      pip:
        name: h5py
        executable: pip3
-   - name: Installing wrapt
+   - name: Installing kafka
      pip:
        name: kafka
        executable: pip2
-   - name: Installing wrapt
+   - name: Installing py4j
      pip:
        name: py4j
        executable: pip2
-    - name: Installing wrapt
+   - name: Installing tensorflowonspark
      pip:
        name: tensorflowonspark
        executable: pip2
-    - name: Installing wrapt
+   - name: Installing jieba
      pip:
        name: jieba
        executable: pip2
-  
