@@ -1,6 +1,18 @@
 - hosts: amazon_1
   become: yes
   tasks:
+   - name: Run the equivalent of "apt-get update" as a separate step
+     apt:
+       update_cache: yes
+
+   - name: Installing java apt
+     apt:
+       name: openjdk-8-jdk-headless
+       state: present
+   - name: Installing zip apt
+     apt:
+       name: zip
+       state: present
    - name: Get apache spark
      get_url: 
        url: https://dlcdn.apache.org/spark/spark-2.4.8/spark-2.4.8-bin-hadoop2.7.tgz
@@ -15,15 +27,12 @@
        dest: /home/ubuntu
        remote_src: True
        owner: ubuntu
-   #- name: Extract spark
-   #  ansible.builtin.unarchive:
-    #   src: /home/ubuntu/spark-deep-learning-154e7a68dffc9e94d83099216e8d1b98d5a0f566.zip
-    #   dest: /home/ubuntu
-    #   remote_src: True
-   - name: unzip sparkdl
-     raw: unzip spark-deep-learning-154e7a68dffc9e94d83099216e8d1b98d5a0f566.zip
-#   owner: ubuntu
-   - name: Extract spark
+   - name: Extract sparkdl
+     ansible.builtin.unarchive:
+       src: /home/ubuntu/spark-deep-learning-154e7a68dffc9e94d83099216e8d1b98d5a0f566.zip
+       dest: /home/ubuntu
+       remote_src: True
+       owner: ubuntu
      ansible.builtin.blockinfile:
        dest: .bashrc
        insertafter: EOF
