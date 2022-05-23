@@ -109,7 +109,7 @@
        block: |
          ec2-3-235-98-34.compute-1.amazonaws.com
          ec2-44-198-169-140.compute-1.amazonaws.com
-         ec2-44-203-27-136.compute-1.amazonaws.com
+         ec2-3-235-248-117.compute-1.amazonaws.com
        backup: yes
        owner: ubuntu
 
