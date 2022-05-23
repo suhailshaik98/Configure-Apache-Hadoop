@@ -63,11 +63,11 @@
          </property>
          <property>         
          <name>yarn.nodemanager.resource.memory-mb</name>
-         <value>6000</value>
+         <value>18000</value>
          </property>
          <property>
          <name>yarn.scheduler.maximum-allocation-mb</name>
-         <value>6000</value>
+         <value>18000</value>
          </property>
          <property>
          <name>yarn.scheduler.minimum-allocation-mb</name>
