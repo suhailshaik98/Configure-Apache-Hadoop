@@ -9,7 +9,7 @@
        block: |
          spark.master yarn
          spark.driver.memory 1g
-         spark.yarn.am.memory 2g
+         spark.yarn.am.memory 1g
          spark.executor.memory 5g
          spark.eventLog.enabled true
          spark.eventLog.dir hdfs://ec2-3-216-9-20.compute-1.amazonaws.com:9000/spark-logs
