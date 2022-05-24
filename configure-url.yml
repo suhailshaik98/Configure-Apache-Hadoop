@@ -97,7 +97,7 @@
        dest: /usr/local/hadoop/etc/hadoop/masters
        insertafter: EOF
        block: |
-         ec2-3-91-252-7.compute-1.amazonaws.com
+         ec2-44-204-231-16.compute-1.amazonaws.com
        backup: yes
        owner: ubuntu
 
