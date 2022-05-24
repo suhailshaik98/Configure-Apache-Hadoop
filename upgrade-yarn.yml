@@ -29,7 +29,7 @@
          </property>
          <property>
          <name>yarn.app.mapreduce.am.resource.cpu-vcores</name>
-         <value>10</value>
+         <value>6</value>
          </property>  
          <property>
          <name>yarn.app.mapreduce.am.env</name>
