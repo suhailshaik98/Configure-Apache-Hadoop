@@ -28,10 +28,6 @@
          <value>1024</value>
          </property>
          <property>
-         <name>yarn.app.mapreduce.am.resource.cpu-vcores</name>
-         <value>6</value>
-         </property>  
-         <property>
          <name>yarn.app.mapreduce.am.env</name>
          <value>HADOOP_MAPRED_HOME=$HADOOP_MAPRED_HOME</value>
          </property>
