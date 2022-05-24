@@ -9,7 +9,7 @@
        block: |
          <property>
          <name>mapred.job.tracker</name>
-         <value>ec2-44-204-231-16.compute-1.amazonaws.com:54311</value>
+         <value>ec2-44-202-60-26.compute-1.amazonaws.com:54311</value>
          </property>
          <property>
          <name>mapreduce.framework.name</name>
@@ -27,6 +27,10 @@
          <name>mapreduce.reduce.memory.mb</name>
          <value>1024</value>
          </property>
+         <property>
+         <name>yarn.app.mapreduce.am.resource.cpu-vcores</name>
+         <value>10</value>
+         </property>  
          <property>
          <name>yarn.app.mapreduce.am.env</name>
          <value>HADOOP_MAPRED_HOME=$HADOOP_MAPRED_HOME</value>
@@ -59,7 +63,7 @@
          </property>
          <property>
          <name>yarn.resourcemanager.hostname</name>
-         <value>ec2-44-204-231-16.compute-1.amazonaws.com</value>
+         <value>ec2-44-202-60-26.compute-1.amazonaws.com</value>
          </property>
          <property>         
          <name>yarn.nodemanager.resource.memory-mb</name>
