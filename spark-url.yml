@@ -12,7 +12,7 @@
          spark.yarn.am.memory 1g
          spark.executor.memory 15g
          spark.eventLog.enabled true
-         spark.eventLog.dir hdfs://ec2-44-202-222-30.compute-1.amazonaws.com:9000/spark-logs
+         spark.eventLog.dir hdfs://ec2-44-204-231-16.compute-1.amazonaws.com:9000/spark-logs
          spark.history.provider org.apache.spark.deploy.history.FsHistoryProvider
          spark.history.fs.logDirectory hdfs://ec2-44-202-222-30.compute-1.amazonaws.com/spark-logs
          spark.history.fs.update.interval 10s
