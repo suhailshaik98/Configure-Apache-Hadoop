@@ -9,7 +9,7 @@
        block: |
          <property>
          <name>mapred.job.tracker</name>
-         <value>ec2-54-91-253-60.compute-1.amazonaws.com:54311</value>
+         <value>ec2-3-85-47-148.compute-1.amazonaws.com:54311</value>
          </property>
          <property>
          <name>mapreduce.framework.name</name>
@@ -59,7 +59,7 @@
          </property>
          <property>
          <name>yarn.resourcemanager.hostname</name>
-         <value>ec2-54-91-253-60.compute-1.amazonaws.com</value>
+         <value>ec2-3-85-47-148.compute-1.amazonaws.com</value>
          </property>
          <property>         
          <name>yarn.nodemanager.resource.memory-mb</name>
