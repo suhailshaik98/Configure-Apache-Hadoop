@@ -7,24 +7,24 @@
 
    - name: Get apache zookeeper
      get_url: 
-       url: https://dlcdn.apache.org/zookeeper/zookeeper-3.8.0/apache-zookeeper-3.8.0-bin.tar.gz
+       url: https://archive.apache.org/dist/zookeeper/zookeeper-3.4.14/zookeeper-3.4.14.tar.gz
        dest: /home/ubuntu
    - name: Extract  zookeeper
      ansible.builtin.unarchive:
-       src: /home/ubuntu/apache-zookeeper-3.8.0-bin.tar.gz
+       src: /home/ubuntu/zookeeper-3.4.14.tar.gz
        dest: /home/ubuntu
        remote_src: True
        owner: ubuntu       
-#   - name: changing name
-#     raw: mv apache-zookeeper-3.8.0-bin zookeeper
-#   - name: Transferring files to usr/local directory
-#     raw: sudo rm -f -r /usr/local/zookeeper     
-#   - name: Transferring files to usr/local directory
-#     raw: mv zookeeper /usr/local/zookeeper
-#   - name: creating data directory
-#     raw: mkdir /usr/local/zookeeper/data  
-#   - name: creating myid file
-#     raw: sudo touch /usr/local/zookeeper/data/myid
+   - name: changing name
+     raw: mv zookeeper-3.4.14 zookeeper
+   - name: Transferring files to usr/local directory
+     raw: sudo rm -f -r /usr/local/zookeeper     
+   - name: Transferring files to usr/local directory
+     raw: mv zookeeper /usr/local/zookeeper
+   - name: creating data directory
+     raw: mkdir /usr/local/zookeeper/data  
+   - name: creating myid file
+     raw: sudo touch /usr/local/zookeeper/data/myid
    - name: creating zoo.cfg file
      raw: sudo touch /usr/local/zookeeper/conf/zoo.cfg 
    - name: Editing zoo.cfg File
@@ -42,36 +42,6 @@
        owner: ubuntu 
    - name: USER rights owning bin
      raw: sudo chown $USER:$USER /usr/local/zookeeper/bin 
-   - name: Editing Bash File
-     
-     ansible.builtin.blockinfile:
-       dest: .bashrc
-       insertafter: EOF
-       block: |
-         export HADOOP_HOME=/usr/local/hadoop
-         export PATH=$PATH:$HADOOP_HOME/bin
-         export PATH=$PATH:$HADOOP_HOME/sbin
-         export HADOOP_MAPRED_HOME=${HADOOP_HOME}
-         export HADOOP_COMMON_HOME=${HADOOP_HOME}
-         export HADOOP_HDFS_HOME=${HADOOP_HOME}
-         export YARN_HOME=${HADOOP_HOME}
-         export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
-         export SPARK_HOME=/usr/local/spark
-         export PYSPARK_PYTHON=python3
-         export PATH=$PATH:$SPARK_HOME/bin
-         export LD_LIBRARY_PATH=$HADOOP_HOME/lib/native:$LD_LIBRARY_PATH
-         export PYTHONPATH=$SPARK_HOME/python:$SPARK_HOME/python/build:$PYTHONPATH
-         export ZOO_HOME=/usr/local/zookeeper-3.4.6
-         export PATH=$ZOO_HOME/bin:$PATH
-          function sparknotebook()
-          {
-          export PYSPARK_PYTHON=python3
-          export SPARK_HOME=/usr/local/spark
-          export PYSPARK_DRIVER_PYTHON=jupyter
-          export PYSPARK_DRIVER_PYTHON_OPTS="notebook"
-          $SPARK_HOME/bin/pyspark --packages databricks:spark-deep-learning:1.5.0-spark2.4-s_2.11
-          }         
-       backup: yes     
 - hosts: amazon_1
   become: yes
   tasks:
