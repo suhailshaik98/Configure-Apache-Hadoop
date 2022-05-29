@@ -18,7 +18,7 @@
    - name: changing name
      raw: mv apache-zookeeper-3.8.0-bin zookeeper
    - name: Transferring files to usr/local directory
-     raw: rm -f /usr/local/zookeeper     
+     raw: sudo rm -f -r /usr/local/zookeeper     
    - name: Transferring files to usr/local directory
      raw: mv zookeeper /usr/local/zookeeper
    - name: creating data directory
