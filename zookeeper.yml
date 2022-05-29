@@ -40,8 +40,6 @@
          server.3 = ec2-54-242-196-207.compute-1.amazonaws.com : 2888 : 3888
        backup: yes
        owner: ubuntu 
-   - name: Make dir hadoop
-     raw: sudo chown ubuntu:ubuntu -R hadoop/hdfs/data
    - name: USER rights owning bin
      raw: sudo chown $USER:$USER /usr/local/zookeeper/bin 
    - name: Editing Bash File
