@@ -19,7 +19,8 @@
      raw: mv apache-zookeeper-3.8.0-bin zookeeper
    - name: Transferring files to usr/local directory
      raw: mv zookeeper /usr/local/zookeeper
-  
+   - name: creating data directory
+     raw: mkdir /usr/local/zookeeper/data  
    - name: creating myid file
      raw: touch usr/local/zookeeper/data/myid
    - name: Editing zoo.cfg File
