@@ -23,8 +23,10 @@
 #     raw: mv zookeeper /usr/local/zookeeper
 #   - name: creating data directory
 #     raw: mkdir /usr/local/zookeeper/data  
-   - name: creating myid file
-     raw: sudo touch /usr/local/zookeeper/data/myid
+#   - name: creating myid file
+#     raw: sudo touch /usr/local/zookeeper/data/myid
+   - name: creating zoo.cfg file
+     raw: sudo touch /usr/local/zookeeper/conf/zoo.cfg 
    - name: Editing zoo.cfg File
      ansible.builtin.blockinfile:
        dest: /usr/local/zookeeper/conf/zoo.cfg
