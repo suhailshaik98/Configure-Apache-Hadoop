@@ -17,13 +17,12 @@
        owner: ubuntu       
    - name: changing name
      raw: mv apache-zookeeper-3.8.0-bin zookeeper
-  
-  - name: Transferring files to usr/local directory
+   - name: Transferring files to usr/local directory
      raw: mv zookeeper /usr/local/zookeeper
   
-  - name: creating myid file
+   - name: creating myid file
      raw: touch usr/local/zookeeper/data/myid
-  - name: Editing zoo.cfg File
+   - name: Editing zoo.cfg File
      ansible.builtin.blockinfile:
        dest: /usr/local/zookeeper/conf/zoo.cfg
        block: |
@@ -31,15 +30,15 @@
          syncLimit = 5
          dataDir = /usr/local/zookeeper/data
          clientPort= 2181
-         server.1 = Master : 2888 : 3888
-         server.2 = Slave1 : 2888 : 3888
-         server.3 = Slave2 : 2888 : 3888
+         server.1 = ec2-54-221-172-176.compute-1.amazonaws.com : 2888 : 3888
+         server.2 = ec2-18-207-151-68.compute-1.amazonaws.com : 2888 : 3888
+         server.3 = ec2-54-242-196-207.compute-1.amazonaws.com : 2888 : 3888
        backup: yes
        owner: ubuntu 
 - hosts: amazon_1
   become: yes
   tasks:
-  - name: Editing MYID File
+   - name: Editing MYID File
      ansible.builtin.blockinfile:
        dest: /usr/local/zookeeper/conf/zoo.cfg
        block: |
@@ -49,7 +48,7 @@
 - hosts: amazon_2
   become: yes
   tasks:
-  - name: Editing MYID file
+   - name: Editing MYID file
      ansible.builtin.blockinfile:
        dest: /usr/local/zookeeper/conf/zoo.cfg
        block: |
@@ -59,10 +58,11 @@
 - hosts: amazon_3
   become: yes
   tasks:
-  - name: Editing MYID file
+   - name: Editing MYID file
      ansible.builtin.blockinfile:
        dest: /usr/local/zookeeper/conf/zoo.cfg
        block: |
          3
        backup: yes
        owner: ubuntu      
+
