@@ -1,0 +1,68 @@
+- hosts: amazon_*
+  become: yes
+  tasks:
+   - name: Run the equivalent of "apt-get update" as a separate step
+     apt:
+       update_cache: yes
+
+   - name: Get apache zookeeper
+     get_url: 
+       url: https://dlcdn.apache.org/zookeeper/zookeeper-3.8.0/apache-zookeeper-3.8.0-bin.tar.gz
+       dest: /home/ubuntu
+   - name: Extract  zookeeper
+     ansible.builtin.unarchive:
+       src: /home/ubuntu/apache-zookeeper-3.8.0-bin.tar.gz
+       dest: /home/ubuntu
+       remote_src: True
+       owner: ubuntu       
+   - name: changing name
+     raw: mv apache-zookeeper-3.8.0-bin zookeeper
+  
+  - name: Transferring files to usr/local directory
+     raw: mv zookeeper /usr/local/zookeeper
+  
+  - name: creating myid file
+     raw: touch usr/local/zookeeper/data/myid
+  - name: Editing zoo.cfg File
+     ansible.builtin.blockinfile:
+       dest: /usr/local/zookeeper/conf/zoo.cfg
+       block: |
+         tickTime = 2000
+         syncLimit = 5
+         dataDir = /usr/local/zookeeper/data
+         clientPort= 2181
+         server.1 = Master : 2888 : 3888
+         server.2 = Slave1 : 2888 : 3888
+         server.3 = Slave2 : 2888 : 3888
+       backup: yes
+       owner: ubuntu 
+- hosts: amazon_1
+  become: yes
+  tasks:
+  - name: Editing MYID File
+     ansible.builtin.blockinfile:
+       dest: /usr/local/zookeeper/conf/zoo.cfg
+       block: |
+         1
+       backup: yes
+       owner: ubuntu     
+- hosts: amazon_2
+  become: yes
+  tasks:
+  - name: Editing MYID file
+     ansible.builtin.blockinfile:
+       dest: /usr/local/zookeeper/conf/zoo.cfg
+       block: |
+         2
+       backup: yes
+       owner: ubuntu
+- hosts: amazon_3
+  become: yes
+  tasks:
+  - name: Editing MYID file
+     ansible.builtin.blockinfile:
+       dest: /usr/local/zookeeper/conf/zoo.cfg
+       block: |
+         3
+       backup: yes
+       owner: ubuntu      
