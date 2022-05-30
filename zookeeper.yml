@@ -15,11 +15,10 @@
        block: |
          tickTime = 2000
          syncLimit = 5
-         dataDir = /usr/local/zookeeper/data
+         dataDir = /usr/share/zookeeper/data
          clientPort= 2181
-         server.1 = ec2-54-87-14-85.compute-1.amazonaws.com : 2888 : 3888
-         server.2 = ec2-18-215-157-9.compute-1.amazonaws.com : 2888 : 3888
-         server.3 = ec2-54-86-137-207.compute-1.amazonaws.com : 2888 : 3888
+         server.1 = ec2-52-90-51-230.compute-1.amazonaws.com : 2888 : 3888
+         server.2 = ec2-44-202-20-34.compute-1.amazonaws.com : 2888 : 3888
        backup: yes
        owner: ubuntu 
 - hosts: amazon_1
@@ -52,4 +51,70 @@
          3
        backup: yes
        owner: ubuntu      
+#https://dlcdn.apache.org/drill/drill-1.20.1/apache-drill-1.20.1.tar.gz
+   - name: Get apache hadoop
+     get_url: 
+       url: https://dlcdn.apache.org/drill/drill-1.20.1/apache-drill-1.20.1.tar.gz
+       dest: /home/ubuntu
 
+   - name: Extract  drill
+     ansible.builtin.unarchive:
+       src: /home/ubuntu/apache-drill-1.20.1.tar.gz
+       dest: /home/ubuntu
+       remote_src: True
+       owner: ubuntu
+
+   - name: removing existing hadoop file
+     raw: rm -r -f apache-drill
+
+
+
+   - name: changing directory from hadoop-3.1.1 to hadoop
+     raw: mv apache-drill-1.20.1 /usr/local/apache-drill/
+   - name: Editing Bash File
+     
+     ansible.builtin.blockinfile:
+       dest: .bashrc
+       insertafter: EOF
+       block: |
+         export HADOOP_HOME=/usr/local/hadoop
+         export PATH=$PATH:$HADOOP_HOME/bin
+         export PATH=$PATH:$HADOOP_HOME/sbin
+         export HADOOP_MAPRED_HOME=${HADOOP_HOME}
+         export HADOOP_COMMON_HOME=${HADOOP_HOME}
+         export HADOOP_HDFS_HOME=${HADOOP_HOME}
+         export YARN_HOME=${HADOOP_HOME}
+         export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
+         export SPARK_HOME=/usr/local/spark
+         export PYSPARK_PYTHON=python3
+         export PATH=$PATH:$SPARK_HOME/bin
+         export LD_LIBRARY_PATH=$HADOOP_HOME/lib/native:$LD_LIBRARY_PATH
+         export PYTHONPATH=$SPARK_HOME/python:$SPARK_HOME/python/build:$PYTHONPATH
+         export ZOO_HOME=/usr/local/zookeeper
+         export PATH=$ZOO_HOME/bin:$PATH
+         export DRILL_NAME=apache-drill
+         export DRILL_HOME=/usr/local/$DRILL_NAME
+          function sparknotebook()
+          {
+          export PYSPARK_PYTHON=python3
+          export SPARK_HOME=/usr/local/spark
+          export PYSPARK_DRIVER_PYTHON=jupyter
+          export PYSPARK_DRIVER_PYTHON_OPTS="notebook"
+          $SPARK_HOME/bin/pyspark --packages databricks:spark-deep-learning:1.5.0-spark2.4-s_2.11
+          } 
+       backup: yes
+       owner: ubuntu      
+   - name: Editing Bash File
+     
+     ansible.builtin.blockinfile:
+       dest: /usr/local/apache-drill/conf/drill-on-yarn.conf
+       insertafter: EOF
+       block: |     
+         drillbit: {
+           heap: "4G"
+           max-direct-memory: "8G"
+           memory-mb: 6144
+           vcores: 4
+         }
+       backup: yes
+       owner: ubuntu 
