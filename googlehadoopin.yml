@@ -8,9 +8,7 @@
    - name: Installing java apt
      apt:
        name: openjdk-8-jdk-headless
-       state: present
-   - name: Make dir data
-     raw: sudo mkdir /home/ubuntu/     
+       state: present   
    - name: Get apache hadoop
      get_url: 
        url: https://archive.apache.org/dist/hadoop/common/hadoop-3.1.1/hadoop-3.1.1.tar.gz
@@ -24,12 +22,12 @@
        owner: ubuntu
 
    - name: removing existing hadoop file
-     raw: rm -r -f hadoop
+     raw: rm -r -f /home/ubuntu/hadoop
 
 
 
    - name: changing directory from hadoop-3.1.1 to hadoop
-     raw: mv hadoop-3.1.1 hadoop/
+     raw: mv /home/ubuntu/hadoop-3.1.1 /home/ubuntuhadoop/
 
    - name: Change permission 
      ansible.builtin.file:
