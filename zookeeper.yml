@@ -4,32 +4,14 @@
  #  - name: Run the equivalent of "apt-get update" as a separate step
  #    apt:
  #      update_cache: yes
-
-  # - name: Get apache zookeeper
-  #   get_url: 
-  #     url: https://archive.apache.org/dist/zookeeper/zookeeper-3.4.14/zookeeper-3.4.14.tar.gz
-  #     dest: /home/ubuntu
-  # - name: Extract  zookeeper
-  #   ansible.builtin.unarchive:
-  #     src: /home/ubuntu/zookeeper-3.4.14.tar.gz
-  #    dest: /home/ubuntu
-  #     remote_src: True
-  #     owner: ubuntu       
-  # - name: changing name
-  #   raw: mv zookeeper-3.4.14 zookeeper
-  # - name: Transferring files to usr/local directory
-  #   raw: sudo rm -f -r /usr/local/zookeeper     
-  # - name: Transferring files to usr/local directory
-  ##   raw: mv zookeeper /usr/local/zookeeper
-   #- name: creating data directory
-   ##  raw: mkdir /usr/local/zookeeper/data  
-   #- name: creating myid file
-  #   raw: sudo touch /usr/local/zookeeper/data/myid
-  # - name: creating zoo.cfg file
-  #   raw: sudo touch /usr/local/zookeeper/conf/zoo.cfg 
+   - name: Run the equivalent of "apt-get update" as a separate step
+     apt:
+       name: zookeeperd
+       state: present
+#      update_cache: yes
    - name: Editing zoo.cfg File
      ansible.builtin.blockinfile:
-       dest: /usr/local/zookeeper/conf/zoo.cfg
+       dest: /usr/share/zookeeper/conf/zoo.cfg
        block: |
          tickTime = 2000
          syncLimit = 5
@@ -40,14 +22,12 @@
          server.3 = ec2-54-86-137-207.compute-1.amazonaws.com : 2888 : 3888
        backup: yes
        owner: ubuntu 
-  # - name: USER rights owning bin
-  #   raw: sudo chown $USER:$USER /usr/local/zookeeper/bin 
 - hosts: amazon_1
   become: yes
   tasks:
    - name: Editing MYID File
      ansible.builtin.blockinfile:
-       dest: /usr/local/zookeeper/data/myid
+       dest: /usr/share/zookeeper/data/myid
        block: |
          1
        backup: yes
@@ -57,7 +37,7 @@
   tasks:
    - name: Editing MYID file
      ansible.builtin.blockinfile:
-       dest: /usr/local/zookeeper/data/myid
+       dest: /usr/share/zookeeper/data/myid
        block: |
          2
        backup: yes
