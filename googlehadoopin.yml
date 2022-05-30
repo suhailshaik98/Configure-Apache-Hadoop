@@ -12,35 +12,35 @@
    - name: Get apache hadoop
      get_url: 
        url: https://archive.apache.org/dist/hadoop/common/hadoop-3.1.1/hadoop-3.1.1.tar.gz
-       dest: /home/ubuntu
+       dest: /home/suhailmsu21
 
    - name: Extract  hadoop
      ansible.builtin.unarchive:
-       src: /home/ubuntu/hadoop-3.1.1.tar.gz
-       dest: /home/ubuntu
+       src: /home/suhailmsu21/hadoop-3.1.1.tar.gz
+       dest: /home/suhailmsu21
        remote_src: True
-       owner: ubuntu
+       owner: suhailmsu21
 
    - name: removing existing hadoop file
-     raw: rm -r -f /home/ubuntu/hadoop
+     raw: rm -r -f /home/suhailmsu21/hadoop
 
 
 
    - name: changing directory from hadoop-3.1.1 to hadoop
-     raw: mv /home/ubuntu/hadoop-3.1.1 /home/ubuntuhadoop/
+     raw: mv hadoop-3.1.1 hadoop/
 
    - name: Change permission 
      ansible.builtin.file:
-       path: /home/ubuntu/hadoop
+       path: /home/suhailmsu21/hadoop
        state: directory
        mode: '0755'
-       owner: ubuntu
+       owner: suhailmsu21
    - name: Make dir hdfstmp
      ansible.builtin.file:
-       path: /home/ubuntu/hadoop/hdfs/data
+       path: /home/suhailmsu21/hadoop/hdfs/data
        state: directory
        mode: '0700'
-       owner: ubuntu
+       owner: suhailmsu21
 
 
    - name: Modifying hosts file     
@@ -81,11 +81,11 @@
    - name: Editing hadoop-env.sh
      
      ansible.builtin.lineinfile:
-       dest: /home/ubuntu/hadoop/etc/hadoop/hadoop-env.sh
+       dest: /home/suhailmsu21/hadoop/etc/hadoop/hadoop-env.sh
        insertafter: EOF
        line: export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
        backup: yes
-       owner: ubuntu
+       owner: suhailmsu21
 
 
 
@@ -93,7 +93,7 @@
    - name: Editing core.xml File
      
      ansible.builtin.blockinfile:
-       dest: /home/ubuntu/hadoop/etc/hadoop/core-site.xml
+       dest: /home/suhailmsu21/hadoop/etc/hadoop/core-site.xml
        marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
        insertafter: "<configuration>"
        block: |
@@ -102,12 +102,12 @@
          <value>hdfs://amazon_1:9000</value>
          </property>
        backup: yes
-       owner: ubuntu
+       owner: suhailmsu21
 
    - name: Editing mapred.xml File
      
      ansible.builtin.blockinfile:
-       dest: /home/ubuntu/hadoop/etc/hadoop/mapred-site.xml
+       dest: /home/suhailmsu21/hadoop/etc/hadoop/mapred-site.xml
        marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
        insertafter: "<configuration>"
        block: |
@@ -120,13 +120,13 @@
          <value>yarn</value>
          </property>
        backup: yes
-       owner: ubuntu
+       owner: suhailmsu21
 
 
    - name: Editing hdfs.xml File
      
      ansible.builtin.blockinfile:
-       dest: /home/ubuntu/hadoop/etc/hadoop/hdfs-site.xml
+       dest: /home/suhailmsu21/hadoop/etc/hadoop/hdfs-site.xml
        marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
        insertafter: "<configuration>"
        block: |
@@ -143,12 +143,12 @@
          <value>file:///usr/local/hadoop/hdfs/data</value>
          </property>
        backup: yes
-       owner: ubuntu
+       owner: suhailmsu21
 
    - name: Editing yarn-site.xml File
      
      ansible.builtin.blockinfile:
-       dest: /home/ubuntu/hadoop/etc/hadoop/yarn-site.xml
+       dest: /home/suhailmsu21/hadoop/etc/hadoop/yarn-site.xml
        marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
        insertafter: "<configuration>"
        block: |
@@ -165,37 +165,37 @@
          <value>amazon_1</value>
          </property>
        backup: yes
-       owner: ubuntu
+       owner: suhailmsu21
 
    - name: Make dir hadoop
-     raw: sudo chown ubuntu:ubuntu -R hadoop/hdfs/data
+     raw: sudo chown suhailmsu21:suhailmsu21 -R hadoop/hdfs/data
    - name: Make dir hadoop2
      raw: chmod 700 hadoop/hdfs/data
 
    - name: create file masters
-     raw: touch /home/ubuntu/hadoop/etc/hadoop/masters
+     raw: touch /home/suhailmsu21/hadoop/etc/hadoop/masters
 
 
    - name: Modifying masters file
      ansible.builtin.blockinfile:
-       dest: /home/ubuntu/hadoop/etc/hadoop/masters
+       dest: /home/suhailmsu21/hadoop/etc/hadoop/masters
        insertafter: EOF
        block: |
          amazon_1
        backup: yes
-       owner: ubuntu
+       owner: suhailmsu21
 
    - name: Modifying slaves file
      
      ansible.builtin.blockinfile:
-       dest: /home/ubuntu/hadoop/etc/hadoop/workers
+       dest: /home/suhailmsu21/hadoop/etc/hadoop/workers
        insertafter: EOF
        block: |
          amazon_2
          amazon_3
          amazon_4
        backup: yes
-       owner: ubuntu
+       owner: suhailmsu21
    - name: Transferring files to usr/local directory
      raw: mv hadoop /usr/local/hadoop
 
@@ -206,9 +206,9 @@
    - name: Changing permissions of the key
      copy:
        src: /cst4570_suhail.pem
-       dest: /home/ubuntu/
+       dest: /home/suhailmsu21/
        mode: '400'
-       owner: ubuntu
+       owner: suhailmsu21
    - name: Installing jupyter notebook
      apt:
        name: jupyter-notebook
@@ -218,9 +218,8 @@
        name: python3-pip
        state: present
 - hosts: google_1
-  become_user: ubuntu
+  become_user: suhailmsu21
   tasks:
    - name: Installing pip
      pip:
        name: findspark
-
