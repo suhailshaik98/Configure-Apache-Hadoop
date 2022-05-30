@@ -65,6 +65,8 @@
          export PYTHONPATH=$SPARK_HOME/python:$SPARK_HOME/python/build:$PYTHONPATH
          export ZOO_HOME=/usr/local/zookeeper
          export PATH=$ZOO_HOME/bin:$PATH
+         export MASTER_DIR=/usr/local/apache-drill
+         export DRILL_SITE=/etc/drill-site
          export DRILL_NAME=apache-drill
          export DRILL_HOME=/usr/local/$DRILL_NAME
           function sparknotebook()
@@ -79,10 +81,27 @@
        owner: ubuntu      
    - name: make drill-on-yarn file
      raw: sudo touch /usr/local/apache-drill/conf/drill-on-yarn.conf
+   - name: make copy files from DRILL HOME
+     raw: sudo cp $DRILL_HOME/conf/drilloverrideexample.conf $DRILL_SITE/drilloverride.conf
+   - name: make copy files from DRILL HOME
+     raw: sudo cp $DRILL_HOME/conf/drill-on-yarnexample.conf $DRILL_SITE/drill-on-yarn.conf
+   - name: make copy files from DRILL HOME
+     raw: sudo cp $DRILL_HOME/conf/drillenv.sh $DRILL_SITE     
    - name: Editing Bash File
      
      ansible.builtin.blockinfile:
-       dest: /usr/local/apache-drill/conf/drill-on-yarn.conf
+       dest: /etc/drill-override.conf
+       insertafter: EOF
+       block: |     
+          drill.exec:{
+            cluster-id: "cluster1",
+            zk.connect: "<zkhostname1>:<port>,<zkhostname2>:<port>,<zkhostname3>:<port>"
+          }
+       backup: yes
+       owner: ubuntu 
+   - name: Editing Bash File
+     ansible.builtin.blockinfile:
+       dest: /etc/drill-on-yarn.conf
        insertafter: EOF
        block: |     
          drillbit: {
