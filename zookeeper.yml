@@ -4,14 +4,14 @@
  #  - name: Run the equivalent of "apt-get update" as a separate step
  #    apt:
  #      update_cache: yes
-   - name: Run the equivalent of "apt-get update" as a separate step
+   - name: apt install zookeeper
      apt:
        name: zookeeperd
        state: present
 #      update_cache: yes
    - name: Editing zoo.cfg File
      ansible.builtin.blockinfile:
-       dest: /usr/share/zookeeper/conf/zoo.cfg
+       dest: /etc/zookeeper/conf/zoo.cfg
        block: |
          tickTime = 2000
          syncLimit = 5
@@ -26,7 +26,7 @@
   tasks:
    - name: Editing MYID File
      ansible.builtin.blockinfile:
-       dest: /usr/share/zookeeper/data/myid
+       dest: /etc/zookeeper/data/myid
        block: |
          1
        backup: yes
@@ -36,7 +36,7 @@
   tasks:
    - name: Editing MYID file
      ansible.builtin.blockinfile:
-       dest: /usr/share/zookeeper/data/myid
+       dest: /etc/zookeeper/data/myid
        block: |
          2
        backup: yes
@@ -46,7 +46,7 @@
   tasks:
    - name: Editing MYID file
      ansible.builtin.blockinfile:
-       dest: /usr/local/zookeeper/data/myid
+       dest: /etc/zookeeper/data/myid
        block: |
          3
        backup: yes
