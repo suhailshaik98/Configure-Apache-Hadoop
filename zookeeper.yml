@@ -35,7 +35,7 @@
    - name: Make dir data
      raw: sudo mkdir /etc/zookeeper/data/
    - name: removing existing drill
-     raw: rm -r -f apache-drill
+     raw: rm -r -f /usr/local/apache-drill
    - name: make myid file
      raw: sudo touch /etc/zookeeper/data/myid
 
