@@ -75,6 +75,8 @@
           } 
        backup: yes
        owner: ubuntu      
+   - name: make drill-on-yarn file
+     raw: sudo touch /usr/local/apache-drill/conf/drill-on-yarn.conf
    - name: Editing Bash File
      
      ansible.builtin.blockinfile:
