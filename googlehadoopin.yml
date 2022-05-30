@@ -9,9 +9,6 @@
      apt:
        name: openjdk-8-jdk-headless
        state: present
-   
-   - name: Make dir data
-     raw: sudo mkdir /home
    - name: Make dir data
      raw: sudo mkdir /home/ubuntu/     
    - name: Get apache hadoop
