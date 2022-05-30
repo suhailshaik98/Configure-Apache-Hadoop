@@ -21,37 +21,6 @@
          server.2 = ec2-44-202-20-34.compute-1.amazonaws.com : 2888 : 3888
        backup: yes
        owner: ubuntu 
-- hosts: amazon_1
-  become: yes
-  tasks:
-   - name: Editing MYID File
-     ansible.builtin.blockinfile:
-       dest: /etc/zookeeper/data/myid
-       block: |
-         1
-       backup: yes
-       owner: ubuntu     
-- hosts: amazon_2
-  become: yes
-  tasks:
-   - name: Editing MYID file
-     ansible.builtin.blockinfile:
-       dest: /etc/zookeeper/data/myid
-       block: |
-         2
-       backup: yes
-       owner: ubuntu
-- hosts: amazon_3
-  become: yes
-  tasks:
-   - name: Editing MYID file
-     ansible.builtin.blockinfile:
-       dest: /etc/zookeeper/data/myid
-       block: |
-         3
-       backup: yes
-       owner: ubuntu      
-#https://dlcdn.apache.org/drill/drill-1.20.1/apache-drill-1.20.1.tar.gz
    - name: Get apache hadoop
      get_url: 
        url: https://dlcdn.apache.org/drill/drill-1.20.1/apache-drill-1.20.1.tar.gz
@@ -63,10 +32,12 @@
        dest: /home/ubuntu
        remote_src: True
        owner: ubuntu
-
-   - name: removing existing hadoop file
+   - name: Make dir data
+     raw: sudo mkdir /etc/zookeeper/data/
+   - name: removing existing drill
      raw: rm -r -f apache-drill
-
+   - name: make myid file
+     raw: sudo touch /etc/zookeeper/data/myid
 
 
    - name: changing directory from hadoop-3.1.1 to hadoop
@@ -118,3 +89,35 @@
          }
        backup: yes
        owner: ubuntu 
+- hosts: amazon_1
+  become: yes
+  tasks:
+   - name: Editing MYID File
+     ansible.builtin.blockinfile:
+       dest: /etc/zookeeper/data/myid
+       block: |
+         1
+       backup: yes
+       owner: ubuntu     
+- hosts: amazon_2
+  become: yes
+  tasks:
+   - name: Editing MYID file
+     ansible.builtin.blockinfile:
+       dest: /etc/zookeeper/data/myid
+       block: |
+         2
+       backup: yes
+       owner: ubuntu
+- hosts: amazon_3
+  become: yes
+  tasks:
+   - name: Editing MYID file
+     ansible.builtin.blockinfile:
+       dest: /etc/zookeeper/data/myid
+       block: |
+         3
+       backup: yes
+       owner: ubuntu      
+#https://dlcdn.apache.org/drill/drill-1.20.1/apache-drill-1.20.1.tar.gz
+
