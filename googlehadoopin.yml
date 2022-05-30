@@ -9,7 +9,11 @@
      apt:
        name: openjdk-8-jdk-headless
        state: present
-
+   
+   - name: Make dir data
+     raw: sudo mkdir /home
+   - name: Make dir data
+     raw: sudo mkdir /home/ubuntu/     
    - name: Get apache hadoop
      get_url: 
        url: https://archive.apache.org/dist/hadoop/common/hadoop-3.1.1/hadoop-3.1.1.tar.gz
