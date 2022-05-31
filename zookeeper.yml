@@ -45,19 +45,19 @@
    - name: changing directory from hadoop-3.1.1 to hadoop
      raw: mv apache-drill-1.20.1 /usr/local/apache-drill/
    - name: make drill-on-yarn file
-     raw: sudo mkdir $DRILL_SITE
+     raw: sudo mkdir /etc/drill-site
    - name: make drill-on-yarn file
      raw: sudo touch /usr/local/apache-drill/conf/drill-on-yarn.conf
    - name: make copy files from DRILL HOME
-     raw: sudo cp $DRILL_HOME/conf/drilloverrideexample.conf $DRILL_SITE/drilloverride.conf
+     raw: sudo cp $DRILL_HOME/conf/drilloverrideexample.conf $DRILL_SITE/drill-override.conf
    - name: make copy files from DRILL HOME
      raw: sudo cp $DRILL_HOME/conf/drill-on-yarnexample.conf $DRILL_SITE/drill-on-yarn.conf
    - name: make copy files from DRILL HOME
      raw: sudo cp $DRILL_HOME/conf/drillenv.sh $DRILL_SITE     
-   - name: Editing Bash File
+   - name: Editing drill-override.conf
      
      ansible.builtin.blockinfile:
-       dest: /etc/drill-override.conf
+       dest: /etc/drill-site/drill-override.conf
        insertafter: EOF
        block: |     
           drill.exec:{
