@@ -209,7 +209,7 @@
   tasks:
    - name: Changing permissions of the key
      copy:
-       src: /cst4570_suhail.pem
+       src: /gcp.pem
        dest: /home/suhailmsu21/
        mode: '400'
        owner: suhailmsu21
