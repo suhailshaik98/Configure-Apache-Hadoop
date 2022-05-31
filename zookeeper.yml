@@ -40,7 +40,10 @@
      raw: rm -r -f /usr/local/apache-drill
    - name: make myid file
      raw: sudo touch /etc/zookeeper/data/myid
-
+   - name: remove drill-on-yarn file
+     raw: sudo rm -r -f /etc/drill-site     
+   - name: remove conf of drill-on-yarn file
+     raw: sudo rm -r -f /usr/local/apache-drill/conf/drill-on-yarn.conf
 
    - name: changing directory from hadoop-3.1.1 to hadoop
      raw: mv apache-drill-1.20.1 /usr/local/apache-drill/
