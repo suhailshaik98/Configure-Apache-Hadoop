@@ -78,7 +78,12 @@
           $SPARK_HOME/bin/pyspark --packages databricks:spark-deep-learning:1.5.0-spark2.4-s_2.11
           } 
        backup: yes
-       owner: suhailmsu21      
+       owner: suhailmsu21 
+
+   - name: loading bashrc file
+     raw:  source ~/. bashrc 
+   - name: make drill-on-yarn file
+     raw: sudo mkdir $DRILL_SITE
    - name: make drill-on-yarn file
      raw: sudo touch /usr/local/apache-drill/conf/drill-on-yarn.conf
    - name: make copy files from DRILL HOME
