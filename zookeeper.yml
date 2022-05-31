@@ -1,4 +1,4 @@
-- hosts: amazon_*
+- hosts: google_*
   become: yes
   tasks:
  #  - name: Run the equivalent of "apt-get update" as a separate step
@@ -17,21 +17,21 @@
          syncLimit = 5
          dataDir = /usr/share/zookeeper/data
          clientPort= 2181
-         server.1 = ec2-52-90-51-230.compute-1.amazonaws.com : 2888 : 3888
-         server.2 = ec2-44-202-20-34.compute-1.amazonaws.com : 2888 : 3888
+         server.1 = 10.128.0.3 : 2888 : 3888
+         server.2 = 10.128.0.3 : 2888 : 3888
        backup: yes
-       owner: ubuntu 
+       owner: suhailmsu21 
    - name: Get apache hadoop
      get_url: 
        url: https://dlcdn.apache.org/drill/drill-1.20.1/apache-drill-1.20.1.tar.gz
-       dest: /home/ubuntu
+       dest: /home/suhailmsu21
 
    - name: Extract  drill
      ansible.builtin.unarchive:
-       src: /home/ubuntu/apache-drill-1.20.1.tar.gz
-       dest: /home/ubuntu
+       src: /home/suhailmsu21/apache-drill-1.20.1.tar.gz
+       dest: /home/suhailmsu21
        remote_src: True
-       owner: ubuntu
+       owner: suhailmsu21
    - name: removing existing drill
      raw: rm -r -f /etc/zookeeper/data
    - name: Make dir data
@@ -78,7 +78,7 @@
           $SPARK_HOME/bin/pyspark --packages databricks:spark-deep-learning:1.5.0-spark2.4-s_2.11
           } 
        backup: yes
-       owner: ubuntu      
+       owner: suhailmsu21      
    - name: make drill-on-yarn file
      raw: sudo touch /usr/local/apache-drill/conf/drill-on-yarn.conf
    - name: make copy files from DRILL HOME
@@ -95,10 +95,10 @@
        block: |     
           drill.exec:{
             cluster-id: "cluster1",
-            zk.connect: "<zkhostname1>:<port>,<zkhostname2>:<port>,<zkhostname3>:<port>"
+            zk.connect: "10.128.0.3:2181,10.128.0.4:2181"
           }
        backup: yes
-       owner: ubuntu 
+       owner: suhailmsu21 
    - name: Editing Bash File
      ansible.builtin.blockinfile:
        dest: /etc/drill-on-yarn.conf
@@ -111,8 +111,8 @@
            vcores: 4
          }
        backup: yes
-       owner: ubuntu 
-- hosts: amazon_1
+       owner: suhailmsu21 
+- hosts: google_1
   become: yes
   tasks:
    - name: Editing MYID File
@@ -121,8 +121,8 @@
        block: |
          1
        backup: yes
-       owner: ubuntu     
-- hosts: amazon_2
+       owner: suhailmsu21     
+- hosts: google_2
   become: yes
   tasks:
    - name: Editing MYID file
@@ -131,16 +131,7 @@
        block: |
          2
        backup: yes
-       owner: ubuntu
-- hosts: amazon_3
-  become: yes
-  tasks:
-   - name: Editing MYID file
-     ansible.builtin.blockinfile:
-       dest: /etc/zookeeper/data/myid
-       block: |
-         3
-       backup: yes
-       owner: ubuntu      
+       owner: suhailmsu21
+    
 #https://dlcdn.apache.org/drill/drill-1.20.1/apache-drill-1.20.1.tar.gz
 
