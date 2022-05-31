@@ -52,11 +52,11 @@
    - name: make drill-on-yarn file
      raw: sudo touch /usr/local/apache-drill/conf/drill-on-yarn.conf
    - name: make copy files from DRILL HOME
-     raw: sudo cp /usr/local/apache-drill/conf/drilloverrideexample.conf $DRILL_SITE/drill-override.conf
+     raw: sudo cp /usr/local/apache-drill/conf/drill-override-example.conf $DRILL_SITE/drill-override.conf
    - name: make copy files from DRILL HOME
-     raw: sudo cp /usr/local/apache-drill/conf/drill-on-yarnexample.conf $DRILL_SITE/drill-on-yarn.conf
+     raw: sudo cp /usr/local/apache-drill/conf/drill-on-yarn-example.conf $DRILL_SITE/drill-on-yarn.conf
    - name: make copy files from DRILL HOME
-     raw: sudo cp /usr/local/apache-drill/conf/drillenv.sh $DRILL_SITE     
+     raw: sudo cp /usr/local/apache-drill/conf/drill-env.sh $DRILL_SITE     
    - name: Editing drill-override.conf
      
      ansible.builtin.blockinfile:
