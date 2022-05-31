@@ -71,7 +71,7 @@
        owner: suhailmsu21 
    - name: Editing Bash File
      ansible.builtin.blockinfile:
-       dest: /etc/drill-on-yarn.conf
+       dest: /etc/drill-site/drill-on-yarn.conf
        insertafter: EOF
        block: |     
          drillbit: {
