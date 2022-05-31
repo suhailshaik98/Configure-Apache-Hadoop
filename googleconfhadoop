@@ -1,0 +1,118 @@
+- hosts: google_*
+  become_user: suhailmsu21
+  tasks:
+   - name: Editing core.xml File
+     
+     ansible.builtin.blockinfile:
+       dest: /usr/local/hadoop/etc/hadoop/core-site.xml
+       marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+       insertafter: "<configuration>"
+       block: |
+         <property>
+         <name>fs.defaultFS</name>
+         <value>hdfs://ec2-52-90-51-230.compute-1.googleaws.com:9000</value>
+         </property>
+       backup: yes
+       owner: suhailmsu21
+
+   - name: Editing mapred.xml File
+     
+     ansible.builtin.blockinfile:
+       dest: /usr/local/hadoop/etc/hadoop/mapred-site.xml
+       marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+       insertafter: "<configuration>"
+       block: |
+         <property>
+         <name>mapred.job.tracker</name>
+         <value>ec2-52-90-51-230.compute-1.googleaws.com:54311</value>
+         </property>
+         <property>
+         <name>mapreduce.framework.name</name>
+         <value>yarn</value>
+         </property>
+       backup: yes
+       owner: suhailmsu21
+
+
+   - name: Editing hdfs.xml File
+     
+     ansible.builtin.blockinfile:
+       dest: /usr/local/hadoop/etc/hadoop/hdfs-site.xml
+       marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+       insertafter: "<configuration>"
+       block: |
+         <property>
+         <name>dfs.replication</name>
+         <value>2</value>
+         </property>
+         <property>
+         <name>dfs.namenode.name.dir</name>
+         <value>file:///usr/local/hadoop/hdfs/data</value>
+         </property>
+         <property>
+         <name>dfs.datanode.data.dir</name>
+         <value>file:///usr/local/hadoop/hdfs/data</value>
+         </property>
+         <property>
+         <name>dfs.permissions</name>
+         <value>false</value>
+         </property>
+       backup: yes
+       owner: suhailmsu21
+
+   - name: Editing yarn-site.xml File
+     
+     ansible.builtin.blockinfile:
+       dest: /usr/local/hadoop/etc/hadoop/yarn-site.xml
+       marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+       insertafter: "<configuration>"
+       block: |
+         <property>
+         <name>yarn.nodemanager.aux-services</name>
+         <value>mapreduce_shuffle</value>
+         </property>
+         <property>
+         <name>yarn.nodemanager.aux-services.mapreduce.shuffle.class</name>
+         <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+         </property>
+         <property>
+         <name>yarn.resourcemanager.hostname</name>
+         <value>ec2-52-90-51-230.compute-1.googleaws.com</value>
+         </property>
+       backup: yes
+       owner: suhailmsu21
+
+   - name: Removing some lines in slaves start File
+     ansible.builtin.lineinfile:
+       path: /usr/local/hadoop/etc/hadoop/workers
+       regexp: 'localhost'
+       line: ''
+       backrefs: yes
+       owner: suhailmsu21
+
+
+
+   - name: Modifying masters file
+     ansible.builtin.blockinfile:
+       dest: /usr/local/hadoop/etc/hadoop/masters
+       insertafter: EOF
+       block: |
+         ec2-52-90-51-230.compute-1.googleaws.com
+       backup: yes
+       owner: suhailmsu21
+
+   - name: Modifying slaves file
+     
+     ansible.builtin.blockinfile:
+       dest: /usr/local/hadoop/etc/hadoop/workers
+       insertafter: EOF
+       block: |
+         ec2-44-202-20-34.compute-1.googleaws.com
+       backup: yes
+       owner: suhailmsu21
+
+- hosts: google_*
+  become: yes
+  tasks: 
+   - name: Rebooting Machines
+     reboot:
