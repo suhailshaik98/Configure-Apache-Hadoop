@@ -80,8 +80,7 @@
        backup: yes
        owner: suhailmsu21 
 
-   - name: loading bashrc file
-     raw:  source ~/. bashrc 
+
    - name: make drill-on-yarn file
      raw: sudo mkdir $DRILL_SITE
    - name: make drill-on-yarn file
