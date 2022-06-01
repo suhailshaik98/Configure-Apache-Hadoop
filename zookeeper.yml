@@ -13,17 +13,19 @@
      ansible.builtin.blockinfile:
        dest: /etc/zookeeper/conf/zoo.cfg
        block: |
-         tickTime = 2000
-         syncLimit = 5
-         dataDir = /usr/share/zookeeper/data
-         clientPort= 2181
-         server.1 = 10.128.0.3 : 2888 : 3888
-         server.2 = 10.128.0.3 : 2888 : 3888
+         tickTime=2000
+         initLimit=10
+         syncLimit= 5
+         dataDir=/etc/zookeeper/data
+         clientPort=2181
+         maxClientCnxns=60
+         server.1=google_1:2888:3888
+         server.2=google_2:2888:3888
        backup: yes
        owner: suhailmsu21 
    - name: Get apache hadoop
      get_url: 
-       url: https://dlcdn.apache.org/drill/drill-1.20.1/apache-drill-1.20.1.tar.gz
+       url: https://archive.apache.org/dist/drill/drill-1.6.0/apache-drill-1.6.0.tar.gz
        dest: /home/suhailmsu21
 
    - name: Extract  drill
