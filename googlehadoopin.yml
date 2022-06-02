@@ -43,10 +43,10 @@
        owner: suhailmsu21
 
 
-   - name: Modifying hosts file     
-     ansible.builtin.copy:
-       src: /etc/hosts
-       dest: /etc/hosts
+#   - name: Modifying hosts file     
+#     ansible.builtin.copy:
+#       src: /etc/hosts
+#       dest: /etc/hosts
 
    - name: Editing Bash File
      
