@@ -98,7 +98,6 @@
        insertafter: EOF
        block: |
          10.128.0.3
-         10.128.0.4
        backup: yes
        owner: suhailmsu21
 
@@ -109,6 +108,7 @@
        insertafter: EOF
        block: |
          10.128.0.4
+         10.128.0.6
        backup: yes
        owner: suhailmsu21
 
