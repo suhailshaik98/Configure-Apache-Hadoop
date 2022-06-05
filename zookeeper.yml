@@ -5,6 +5,8 @@
      unarchive: 
        src: https://archive.apache.org/dist/zookeeper/zookeeper-3.5.8/apache-zookeeper-3.5.8-bin.tar.gz
        dest: /home/suhailmsu21
+       backup: yes
+       owner: suhailmsu21        
    - name: Installing java apt
      apt:
        name: zookeeperd
