@@ -1,11 +1,14 @@
-- hosts: google_1
+- hosts: google_*
   become: yes
   tasks:
    - name: Get apache zookeeper
      unarchive: 
        src: https://archive.apache.org/dist/zookeeper/zookeeper-3.5.8/apache-zookeeper-3.5.8-bin.tar.gz
        dest: /home/suhailmsu21
-     
+   - name: Installing java apt
+     apt:
+       name: zookeeperd
+       state: present      
    - name: Changing name of the file zookeeper
      raw: mv apache-zookeeper-3.5.8-bin zookeeper
    - name: Creating zoo.cfg file
