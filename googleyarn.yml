@@ -77,6 +77,5 @@
          <name>yarn.nodemanager.vmem-check-enabled</name>
          <value>false</value>
          </property>
-         <property>
        backup: yes
        owner: suhailmsu21
