@@ -1,4 +1,4 @@
-- hosts: google-2
+- hosts: google-*
   become: yes
   pre_tasks:
    - name: Run the equivalent of "apt-get update" as a separate step
@@ -76,10 +76,10 @@
        owner: suhailmsu21
 
 
-#   - name: Modifying hosts file     
-#     ansible.builtin.copy:
-#       src: /etc/hosts
-#       dest: /etc/hosts
+   - name: Modifying hosts file     
+     ansible.builtin.copy:
+       src: /etc/hosts
+       dest: /etc/hosts
 
 
    - name: Editing hadoop-env.sh 
@@ -116,11 +116,35 @@
        block: |
          <property>
          <name>mapred.job.tracker</name>
-         <value>amazon_1:54311</value>
+         <value>10.128.0.7:54311</value>
          </property>
          <property>
          <name>mapreduce.framework.name</name>
          <value>yarn</value>
+         </property>
+         <property>
+         <name>yarn.app.mapreduce.am.resource.mb</name>
+         <value>2048</value>
+         </property>
+         <property>
+         <name>mapreduce.map.memory.mb</name>
+         <value>1024</value>
+         </property>
+         <property>
+         <name>mapreduce.reduce.memory.mb</name>
+         <value>1024</value>
+         </property>
+         <property>
+         <name>yarn.app.mapreduce.am.env</name>
+         <value>HADOOP_MAPRED_HOME=$HADOOP_MAPRED_HOME</value>
+         </property>
+         <property>
+         <name>mapreduce.map.env</name>
+         <value>HADOOP_MAPRED_HOME=$HADOOP_MAPRED_HOME</value>
+         </property>
+         <property>
+         <name>mapreduce.reduce.env</name>
+         <value>HADOOP_MAPRED_HOME=$HADOOP_MAPRED_HOME</value>
          </property>
        backup: yes
        owner: suhailmsu21
@@ -165,7 +189,24 @@
          </property>
          <property>
          <name>yarn.resourcemanager.hostname</name>
-         <value>amazon_1</value>
+         <value>10.128.0.7</value>
+         </property>
+         <property>         
+         <name>yarn.nodemanager.resource.memory-mb</name>
+         <value>4000</value>
+         </property>
+         <property>
+         <name>yarn.scheduler.maximum-allocation-mb</name>
+         <value>4500</value>
+         </property>
+         <property>
+         <name>yarn.scheduler.minimum-allocation-mb</name>
+         <value>1024</value>
+         </property>
+         <property>
+         <name>yarn.nodemanager.vmem-check-enabled</name>
+         <value>false</value>
+         </property>
          </property>
        backup: yes
        owner: suhailmsu21
@@ -184,7 +225,7 @@
        dest: /home/suhailmsu21/hadoop/etc/hadoop/masters
        insertafter: EOF
        block: |
-         amazon_1
+         10.128.0.7
        backup: yes
        owner: suhailmsu21
 
@@ -194,33 +235,19 @@
        dest: /home/suhailmsu21/hadoop/etc/hadoop/workers
        insertafter: EOF
        block: |
-         amazon_2
-         amazon_3
-         amazon_4
+         10.128.0.8
+         10.128.0.9
+         10.128.0.10
        backup: yes
        owner: suhailmsu21
    - name: Transferring files to usr/local directory
      raw: mv hadoop /usr/local/hadoop
-
-
-
    - name: Changing permissions of the key
      copy:
        src: /gcp.pem
        dest: /home/suhailmsu21/
        mode: '400'
        owner: suhailmsu21
-#   - name: Installing jupyter notebook
-#     apt:
-#       name: jupyter-notebook
-#       state: present
-#   - name: Installing pip
-#     apt:
-#       name: python3-pip
-#       state: present
-#- hosts: google_1
-#  become_user: suhailmsu21
-#  tasks:
-#   - name: Installing pip
-#     pip:
-#       name: findspark
+
+   - name: Rebooting Machines
+     reboot:
