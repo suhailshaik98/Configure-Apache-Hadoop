@@ -1,89 +1,34 @@
-- hosts: google_*
+- hosts: google_1
   become: yes
   tasks:
- #  - name: Run the equivalent of "apt-get update" as a separate step
- #    apt:
- #      update_cache: yes
-   - name: apt install zookeeper
-     apt:
-       name: zookeeperd
-       state: present
-#      update_cache: yes
+   - name: Get apache zookeeper
+     unarchive: 
+       src: https://archive.apache.org/dist/zookeeper/zookeeper-3.5.8/apache-zookeeper-3.5.8-bin.tar.gz
+       dest: /home/suhailmsu21
+     
+   - name: Changing name of the file zookeeper
+     raw: mv apache-zookeeper-3.5.8-bin zookeeper
+   - name: Creating zoo.cfg file
+     raw: touch /home/suhailmsu21/zookeeper/conf/zoo.cfg
+   - name: Creating zoo.cfg file
+     raw: touch /etc/zookeeper/data/myid     
    - name: Editing zoo.cfg File
      ansible.builtin.blockinfile:
-       dest: /etc/zookeeper/conf/zoo.cfg
+       dest: /home/suhailmsu21/zookeeper/conf/zoo.cfg
        block: |
          tickTime=2000
-         initLimit=10
-         syncLimit= 5
          dataDir=/etc/zookeeper/data
          clientPort=2181
-         maxClientCnxns=60
-         server.1=google_1:2888:3888
-         server.2=google_2:2888:3888
+         initLimit=5
+         syncLimit=2      
+         server.1=google-1:2888:3888
+         server.2=google-2:2888:3888
+         server.3=google-3:2888:3888
+         server.4=google-4:2888:3888
        backup: yes
        owner: suhailmsu21 
-   - name: Get apache hadoop
-     get_url: 
-       url: https://archive.apache.org/dist/drill/drill-1.6.0/apache-drill-1.6.0.tar.gz
-       dest: /home/suhailmsu21
 
-   - name: Extract  drill
-     ansible.builtin.unarchive:
-       src: /home/suhailmsu21/apache-drill-1.20.1.tar.gz
-       dest: /home/suhailmsu21
-       remote_src: True
-       owner: suhailmsu21
-   - name: removing existing drill
-     raw: rm -r -f /etc/zookeeper/data
-   - name: Make dir data
-     raw: sudo mkdir /etc/zookeeper/data/
-   - name: removing existing drill
-     raw: rm -r -f /usr/local/apache-drill
-   - name: make myid file
-     raw: sudo touch /etc/zookeeper/data/myid
-   - name: remove drill-on-yarn file
-     raw: sudo rm -r -f /etc/drill-site     
-   - name: remove conf of drill-on-yarn file
-     raw: sudo rm -r -f /usr/local/apache-drill/conf/drill-on-yarn.conf
-
-   - name: changing directory from hadoop-3.1.1 to hadoop
-     raw: mv apache-drill-1.20.1 /usr/local/apache-drill/
-   - name: make drill-on-yarn file
-     raw: sudo mkdir /etc/drill-site
-   - name: make drill-on-yarn file
-     raw: sudo touch /usr/local/apache-drill/conf/drill-on-yarn.conf
-   - name: make copy files from DRILL HOME
-     raw: sudo cp /usr/local/apache-drill/conf/drill-override-example.conf /etc/drill-site/drill-override.conf
-   - name: make copy files from DRILL HOME
-     raw: sudo cp /usr/local/apache-drill/conf/drill-on-yarn-example.conf /etc/drill-site/drill-on-yarn.conf
-   - name: make copy files from DRILL HOME
-     raw: sudo cp /usr/local/apache-drill/conf/drill-env.sh /etc/drill-site/     
-   - name: Editing drill-override.conf
-     
-     ansible.builtin.blockinfile:
-       dest: /etc/drill-site/drill-override.conf
-       insertafter: EOF
-       block: |     
-          drill.exec:{
-            cluster-id: "cluster1",
-            zk.connect: "10.128.0.3:2181,10.128.0.4:2181"
-          }
-       backup: yes
-       owner: suhailmsu21 
-   - name: Editing Bash File
-     ansible.builtin.blockinfile:
-       dest: /etc/drill-site/drill-on-yarn.conf
-       insertafter: EOF
-       block: |     
-         drillbit: {
-           heap: "4G"
-           max-direct-memory: "8G"
-           memory-mb: 6144
-           vcores: 4
-         }
-       backup: yes
-       owner: suhailmsu21 
+ 
 - hosts: google_1
   become: yes
   tasks:
@@ -104,6 +49,25 @@
          2
        backup: yes
        owner: suhailmsu21
-    
+- hosts: google_3
+  become: yes
+  tasks:
+   - name: Editing MYID file
+     ansible.builtin.blockinfile:
+       dest: /etc/zookeeper/data/myid
+       block: |
+         3
+       backup: yes
+       owner: suhailmsu21
+- hosts: google_4
+  become: yes
+  tasks:
+   - name: Editing MYID file
+     ansible.builtin.blockinfile:
+       dest: /etc/zookeeper/data/myid
+       block: |
+         4
+       backup: yes
+       owner: suhailmsu21    
 #https://dlcdn.apache.org/drill/drill-1.20.1/apache-drill-1.20.1.tar.gz
 
