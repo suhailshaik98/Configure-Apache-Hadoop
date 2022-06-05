@@ -1,0 +1,36 @@
+   - name: Get apache zookeeper
+     unarchive: 
+       src: https://dlcdn.apache.org/drill/drill-1.19.0/apache-drill-1.19.0.tar.gz
+       dest: /home/suhailmsu21
+       remote_src: True 
+       owner: suhailmsu21             
+   - name: make myid file
+     raw: sudo touch /home/suhailmsu21/zookeeper/data/myid
+   - name: Deleting existing drill-override file
+     raw: rm -r -f /home/suhail/apache-drill-1.19.0/conf/drill-override.conf
+   - name: Creating drill-override file
+     raw: touch /home/suhail/apache-drill-1.19.0/conf/drill-override.conf     
+   - name: Editing drill-override.conf     
+     ansible.builtin.blockinfile:
+       dest: /home/suhail/apache-drill-1.19.0/conf/drill-override.conf
+       insertafter: EOF
+       block: |     
+          drill.exec:{
+            cluster-id: "cluster1",
+            zk.connect: "10.128.0.3:2181,10.128.0.4:2181,10.128.0.5,10.128.0.6"
+          }
+       backup: yes
+       owner: suhailmsu21 
+   - name: Editing Bash File
+     ansible.builtin.blockinfile:
+       dest: /etc/drill-site/drill-on-yarn.conf
+       insertafter: EOF
+       block: |     
+         drillbit: {
+           heap: "4G"
+           max-direct-memory: "8G"
+           memory-mb: 6144
+           vcores: 4
+         }
+       backup: yes
+       owner: suhailmsu21
