@@ -77,5 +77,21 @@
          <name>yarn.nodemanager.vmem-check-enabled</name>
          <value>false</value>
          </property>
+         <property>
+         <name>yarn.resourcemanager.ha.enabled</name>
+         <value>true</value>
+         </property>
+         <property>
+         <name>yarn.resourcemanager.zk-address</name>
+         <value>google-1:2181,google-2:2181,google-3:2181</value>
+         </property>
+         <property>
+         <name>yarn.resourcemanager.recovery.enabled</name>
+         <value>true</value>
+         </property>
+         <property>
+         <name>yarn.resourcemanager.ha.automatic-failover.enabled</name>
+         <value>true</value>
+         </property>
        backup: yes
        owner: suhailmsu21
