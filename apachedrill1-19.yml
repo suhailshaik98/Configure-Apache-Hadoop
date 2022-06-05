@@ -24,16 +24,19 @@
           }
        backup: yes
        owner: suhailmsu21 
-   - name: Editing Bash File
+
+   - name: Get apache hadoop
+     get_url: 
+       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/drill-on-yarn.conf
+       dest: /home/suhail/apache-drill-1.19.0/conf
+       backup: yes
+       owner: suhailmsu21
+   - name: Editing drill-env.sh File
      ansible.builtin.blockinfile:
-       dest: /etc/drill-site/drill-on-yarn.conf
+       dest: /etc/drill-site/drill-env.sh
        insertafter: EOF
        block: |     
-         drillbit: {
-           heap: "4G"
-           max-direct-memory: "8G"
-           memory-mb: 6144
-           vcores: 4
-         }
+         export HADOOP_HOME=/usr/local/hadoop
+         export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
        backup: yes
        owner: suhailmsu21
