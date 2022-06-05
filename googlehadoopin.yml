@@ -116,7 +116,7 @@
        block: |
          <property>
          <name>mapred.job.tracker</name>
-         <value>10.128.0.7:54311</value>
+         <value>10.128.0.3:54311</value>
          </property>
          <property>
          <name>mapreduce.framework.name</name>
@@ -189,7 +189,7 @@
          </property>
          <property>
          <name>yarn.resourcemanager.hostname</name>
-         <value>10.128.0.7</value>
+         <value>10.128.0.3</value>
          </property>
          <property>         
          <name>yarn.nodemanager.resource.memory-mb</name>
@@ -225,7 +225,7 @@
        dest: /home/suhailmsu21/hadoop/etc/hadoop/masters
        insertafter: EOF
        block: |
-         10.128.0.7
+         10.128.0.3
        backup: yes
        owner: suhailmsu21
 
@@ -235,9 +235,9 @@
        dest: /home/suhailmsu21/hadoop/etc/hadoop/workers
        insertafter: EOF
        block: |
+         10.128.0.4
+         10.128.0.6
          10.128.0.8
-         10.128.0.9
-         10.128.0.10
        backup: yes
        owner: suhailmsu21
    - name: Transferring files to usr/local directory
