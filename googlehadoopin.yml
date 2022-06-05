@@ -1,14 +1,14 @@
-- hosts: google-*
+- hosts: google-2
   become: yes
   pre_tasks:
-#   - name: Run the equivalent of "apt-get update" as a separate step
-#     apt:
-#       update_cache: yes
+   - name: Run the equivalent of "apt-get update" as a separate step
+     apt:
+       update_cache: yes
 
-#   - name: Installing java apt
-#     apt:
-#       name: openjdk-8-jdk-headless
-#       state: present   
+   - name: Installing java apt
+     apt:
+       name: openjdk-8-jdk-headless
+       state: present   
    - name: Get apache hadoop
      get_url: 
        url: https://archive.apache.org/dist/hadoop/common/hadoop-3.2.2/hadoop-3.2.2.tar.gz
