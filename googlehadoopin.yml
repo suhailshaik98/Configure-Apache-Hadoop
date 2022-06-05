@@ -23,8 +23,41 @@
 
    - name: removing existing hadoop file
      raw: rm -r -f /home/suhailmsu21/hadoop
-
-
+   - name: Editing core.xml File
+     ansible.builtin.blockinfile:
+       dest: /home/suhailmsu21/hadoop/etc/hadoop/core-site.xml
+       marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+       insertafter: "<configuration>"
+       block: |
+         export HADOOP_HOME=/usr/local/hadoop
+         export PATH=$PATH:$HADOOP_HOME/bin
+         export PATH=$PATH:$HADOOP_HOME/sbin
+         export HADOOP_MAPRED_HOME=${HADOOP_HOME}
+         export HADOOP_COMMON_HOME=${HADOOP_HOME}
+         export HADOOP_HDFS_HOME=${HADOOP_HOME}
+         export YARN_HOME=${HADOOP_HOME}
+         export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
+         export SPARK_HOME=/usr/local/spark
+         export PYSPARK_PYTHON=python3
+         export PATH=$PATH:$SPARK_HOME/bin
+         export LD_LIBRARY_PATH=$HADOOP_HOME/lib/native:$LD_LIBRARY_PATH
+         export PYTHONPATH=$SPARK_HOME/python:$SPARK_HOME/python/build:$PYTHONPATH
+         export ZOO_HOME=/usr/local/zookeeper
+         export PATH=$ZOO_HOME/bin:$PATH
+         export MASTER_DIR=/usr/local/apache-drill
+         export DRILL_SITE=/etc/drill-site
+         export DRILL_NAME=apache-drill
+         export DRILL_HOME=/usr/local/$DRILL_NAME
+         function sparknotebook()
+          {
+          export PYSPARK_PYTHON=python3
+          export SPARK_HOME=/usr/local/spark
+          export PYSPARK_DRIVER_PYTHON=jupyter
+          export PYSPARK_DRIVER_PYTHON_OPTS="notebook"
+          $SPARK_HOME/bin/pyspark --packages databricks:spark-deep-learning:1.5.0-spark2.4-s_2.11
+          }
+       backup: yes
+       owner: suhailmsu21
 
    - name: changing directory from hadoop-3.2.2 to hadoop
      raw: mv hadoop-3.2.2 hadoop/
@@ -170,15 +203,13 @@
      raw: mv hadoop /usr/local/hadoop
 
 
-#- hosts: google_*
-#  become: yes
-#  tasks:
-#   - name: Changing permissions of the key
-#     copy:
-#       src: /gcp.pem
-#       dest: /home/suhailmsu21/
-#       mode: '400'
-#       owner: suhailmsu21
+
+   - name: Changing permissions of the key
+     copy:
+       src: /gcp.pem
+       dest: /home/suhailmsu21/
+       mode: '400'
+       owner: suhailmsu21
 #   - name: Installing jupyter notebook
 #     apt:
 #       name: jupyter-notebook
