@@ -99,10 +99,10 @@
          export PYTHONPATH=$SPARK_HOME/python:$SPARK_HOME/python/build:$PYTHONPATH
          export ZOO_HOME=/usr/local/zookeeper
          export PATH=$ZOO_HOME/bin:$PATH
-         export MASTER_DIR=/usr/local/apache-drill
-         export DRILL_SITE=/etc/drill-site
+         export MASTER_DIR=/home/suhailmsu21/apache-drill
+         export DRILL_SITE=/home/suhailmsu21/apache-drill/conf
          export DRILL_NAME=apache-drill
-         export DRILL_HOME=/usr/local/$DRILL_NAME
+         export DRILL_HOME=/home/suhailmsu21/$DRILL_NAME
          function sparknotebook()
           {
           export PYSPARK_PYTHON=python3
