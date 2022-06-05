@@ -1,5 +1,5 @@
 - hosts: google-*
-  become:yes
+  become: yes
   tasks:
    - name: Editing mapred.xml File 
      ansible.builtin.blockinfile:
