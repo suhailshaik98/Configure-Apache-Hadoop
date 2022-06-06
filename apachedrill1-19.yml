@@ -1,4 +1,4 @@
-- hosts: google_1
+- hosts: google-*
   become: yes
   tasks:
    - name: Get apache zookeeper
@@ -20,7 +20,7 @@
        block: |     
           drill.exec:{
             cluster-id: "cluster1",
-            zk.connect: "10.128.0.3:2181,10.128.0.4:2181,10.128.0.5,10.128.0.6"
+            zk.connect: "google-1:2181,google-2:2181,google-3:2181,google-4:2181"
           }
        backup: yes
        owner: suhailmsu21 
