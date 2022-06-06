@@ -41,28 +41,33 @@
    - name: Creating myid file
      raw: mv zookeeper /usr/share/zookeeper
  
-- hosts: google_1
-  become: yes
-  tasks:
-   - name: Editing MYID File
+   - name: Remove zoo.cfg from etc
+     raw: rm -r -f  /etc/zookeeper/conf/zoo.cfg
+   - name: Creating zoo.cfg file
+     raw: touch /etc/zookeeper/conf/zoo.cfg     
+   - name: Editing zoo.cfg File
      ansible.builtin.blockinfile:
-       dest: /etc/zookeeper/data/myid
+       dest: /etc/zookeeper/conf/zoo.cfg
        block: |
-         1
+         tickTime=2000
+         dataDir=/etc/zookeeper/data
+         clientPort=2181
+         initLimit=5
+         syncLimit=2      
+         server.1=google-1:2888:3888
+         server.2=google-2:2888:3888
+         server.3=google-3:2888:3888
+         server.4=amazon-3:2888:3888
+         server.5=amazon-2:2888:3888
        backup: yes
-       owner: suhailmsu21     
-- hosts: google_2
-  become: yes
-  tasks:
-   - name: Editing MYID file
-     ansible.builtin.blockinfile:
-       dest: /etc/zookeeper/data/myid
-       marker: false
-       block: |
-         2
-       backup: yes
-       owner: suhailmsu21
-- hosts: google_3
+       owner: ubuntu  
+   - name: Remove /usr/share/zookeeper
+     raw: rm -r -f  /usr/share/zookeeper
+   - name: Moving zookeeper to zookeeper
+     raw: mv zookeeper /usr/share/zookeeper
+ 
+   
+- hosts: google-3
   become: yes
   tasks:
    - name: Editing MYID file
@@ -71,8 +76,50 @@
        block: |
          3
        backup: yes
-       owner: suhailmsu21
-#- hosts: google_4
+       owner: ubuntu
+   - name: Editing MYID file
+     ansible.builtin.blockinfile:
+       dest: /etc/zookeeper/conf/myid
+       block: |
+         3
+       backup: yes
+       owner: ubuntu
+- hosts: google-2
+  become: yes
+  tasks:
+   - name: Editing MYID file
+     ansible.builtin.blockinfile:
+       dest: /etc/zookeeper/data/myid
+       block: |
+         2
+       backup: yes
+       owner: ubuntu
+   - name: Editing MYID file
+     ansible.builtin.blockinfile:
+       dest: /etc/zookeeper/conf/myid
+       block: |
+         2
+       backup: yes
+       owner: ubuntu
+- hosts: google-1
+  become: yes
+  tasks:
+   - name: Editing MYID file
+     ansible.builtin.blockinfile:
+       dest: /etc/zookeeper/data/myid
+       block: |
+         1
+       backup: yes
+       owner: ubuntu
+   - name: Editing MYID file
+     ansible.builtin.blockinfile:
+       dest: /etc/zookeeper/conf/myid
+       block: |
+         1
+       backup: yes
+       owner: ubuntu
+
+#- hosts: google-1
  # become: yes
   #tasks:
   # - name: Editing MYID file
