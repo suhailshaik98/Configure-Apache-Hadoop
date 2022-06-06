@@ -26,8 +26,7 @@
    - name: Editing core.xml File
      ansible.builtin.blockinfile:
        dest: .bashrc
-       marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
-       insertafter: "<configuration>"
+       insertafter: EOF
        block: |
          export HADOOP_HOME=/usr/local/hadoop
          export PATH=$PATH:$HADOOP_HOME/bin
