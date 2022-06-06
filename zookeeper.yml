@@ -13,6 +13,8 @@
        name: zookeeperd
        state: present      
    - name: Changing name of the file zookeeper
+     raw: rm -r -f zookeeper  
+   - name: Changing name of the file zookeeper
      raw: mv apache-zookeeper-3.5.8-bin zookeeper
    - name: Changing name of the file zookeeper
      raw: mkdir /etc/zookeeper/data
