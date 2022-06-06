@@ -1,4 +1,4 @@
-- hosts: google_*
+- hosts: google_4
   become: yes
   tasks:
    - name: Get apache zookeeper
@@ -34,39 +34,39 @@
        owner: suhailmsu21 
 
  
-- hosts: google_1
-  become: yes
-  tasks:
-   - name: Editing MYID File
-     ansible.builtin.blockinfile:
-       dest: /etc/zookeeper/data/myid
-       block: |
-         1
-       backup: yes
-       owner: suhailmsu21     
-- hosts: google_2
-  become: yes
-  tasks:
-   - name: Editing MYID file
-     ansible.builtin.blockinfile:
-       dest: /etc/zookeeper/data/myid
-       block: |
-         2
-       backup: yes
-       owner: suhailmsu21
-- hosts: google_3
-  become: yes
-  tasks:
-   - name: Editing MYID file
-     ansible.builtin.blockinfile:
-       dest: /etc/zookeeper/data/myid
-       block: |
-         3
-       backup: yes
-       owner: suhailmsu21
-- hosts: google_4
-  become: yes
-  tasks:
+#- hosts: google_1
+#  become: yes
+#  tasks:
+#   - name: Editing MYID File
+#     ansible.builtin.blockinfile:
+#       dest: /etc/zookeeper/data/myid
+#       block: |
+#         1
+#       backup: yes
+#       owner: suhailmsu21     
+#- hosts: google_2
+#  become: yes
+#  tasks:
+#   - name: Editing MYID file
+#     ansible.builtin.blockinfile:
+#       dest: /etc/zookeeper/data/myid
+#       block: |
+#         2
+#       backup: yes
+#       owner: suhailmsu21
+#- hosts: google_3
+#  become: yes
+#  tasks:
+##   - name: Editing MYID file
+ #    ansible.builtin.blockinfile:
+ #      dest: /etc/zookeeper/data/myid
+ #      block: |
+ #        3
+ #      backup: yes
+ #      owner: suhailmsu21
+#- hosts: google_4
+ # become: yes
+  #tasks:
    - name: Editing MYID file
      ansible.builtin.blockinfile:
        dest: /etc/zookeeper/data/myid
