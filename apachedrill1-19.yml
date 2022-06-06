@@ -7,8 +7,6 @@
        dest: /home/suhailmsu21
        remote_src: True 
        owner: suhailmsu21             
-   - name: make myid file
-     raw: sudo touch /home/suhailmsu21/zookeeper/data/myid
    - name: Deleting existing drill-override file
      raw: rm -r -f /home/suhail/apache-drill-1.19.0/conf/drill-override.conf
    - name: Creating drill-override file
