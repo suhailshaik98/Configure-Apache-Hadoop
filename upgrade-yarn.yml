@@ -1,4 +1,4 @@
-- hosts: amazon_*
+- hosts: amazon-*
   become_user: ubuntu
   tasks:
    - name: Editing mapred.xml File 
@@ -9,7 +9,7 @@
        block: |
          <property>
          <name>mapred.job.tracker</name>
-         <value>ec2-3-85-47-148.compute-1.amazonaws.com:54311</value>
+         <value>google-1:54311</value>
          </property>
          <property>
          <name>mapreduce.framework.name</name>
@@ -21,11 +21,11 @@
          </property>
          <property>
          <name>mapreduce.map.memory.mb</name>
-         <value>1024</value>
+         <value>2048</value>
          </property>
          <property>
          <name>mapreduce.reduce.memory.mb</name>
-         <value>1024</value>
+         <value>3584</value>
          </property>
          <property>
          <name>yarn.app.mapreduce.am.env</name>
@@ -59,19 +59,19 @@
          </property>
          <property>
          <name>yarn.resourcemanager.hostname</name>
-         <value>ec2-3-85-47-148.compute-1.amazonaws.com</value>
+         <value>google-1</value>
          </property>
          <property>         
          <name>yarn.nodemanager.resource.memory-mb</name>
-         <value>18000</value>
+         <value>10240</value>
          </property>
          <property>
          <name>yarn.scheduler.maximum-allocation-mb</name>
-         <value>20000</value>
+         <value>10240</value>
          </property>
          <property>
          <name>yarn.scheduler.minimum-allocation-mb</name>
-         <value>1024</value>
+         <value>2048</value>
          </property>
          <property>
          <name>yarn.nodemanager.vmem-check-enabled</name>
