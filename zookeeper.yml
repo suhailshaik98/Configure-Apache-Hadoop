@@ -1,4 +1,4 @@
-- hosts: google-4
+- hosts: google-*
   become: yes
   tasks:
    - name: Get apache zookeeper
@@ -35,47 +35,51 @@
          server.4=google-4:2888:3888
        backup: yes
        owner: suhailmsu21 
-
+   - name: Creating myid file
+     raw: rm -r -f  /usr/share/zookeeper
+   - name: Creating myid file
+     raw: mv zookeeper /usr/share/zookeeper
  
-#- hosts: google_1
-#  become: yes
-#  tasks:
-#   - name: Editing MYID File
-#     ansible.builtin.blockinfile:
-#       dest: /etc/zookeeper/data/myid
-#       block: |
-#         1
-#       backup: yes
-#       owner: suhailmsu21     
-#- hosts: google_2
-#  become: yes
-#  tasks:
-#   - name: Editing MYID file
-#     ansible.builtin.blockinfile:
-#       dest: /etc/zookeeper/data/myid
-#       block: |
-#         2
-#       backup: yes
-#       owner: suhailmsu21
-#- hosts: google_3
-#  become: yes
-#  tasks:
-##   - name: Editing MYID file
- #    ansible.builtin.blockinfile:
- #      dest: /etc/zookeeper/data/myid
- #      block: |
- #        3
- #      backup: yes
- #      owner: suhailmsu21
-#- hosts: google_4
- # become: yes
-  #tasks:
+- hosts: google_1
+  become: yes
+  tasks:
+   - name: Editing MYID File
+     ansible.builtin.blockinfile:
+       dest: /etc/zookeeper/data/myid
+       block: |
+         1
+       backup: yes
+       owner: suhailmsu21     
+- hosts: google_2
+  become: yes
+  tasks:
+   - name: Editing MYID file
+     ansible.builtin.blockinfile:
+       dest: /etc/zookeeper/data/myid
+       marker: false
+       block: |
+         2
+       backup: yes
+       owner: suhailmsu21
+- hosts: google_3
+  become: yes
+  tasks:
    - name: Editing MYID file
      ansible.builtin.blockinfile:
        dest: /etc/zookeeper/data/myid
        block: |
-         4
+         3
        backup: yes
-       owner: suhailmsu21    
+       owner: suhailmsu21
+#- hosts: google_4
+ # become: yes
+  #tasks:
+  # - name: Editing MYID file
+   #  ansible.builtin.blockinfile:
+   #    dest: /etc/zookeeper/data/myid
+   #    block: |
+   #      4
+   #    backup: yes
+   #    owner: suhailmsu21    
 #https://dlcdn.apache.org/drill/drill-1.20.1/apache-drill-1.20.1.tar.gz
 
