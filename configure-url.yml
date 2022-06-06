@@ -1,4 +1,4 @@
-- hosts: amazon_*
+- hosts: amazon-*
   become_user: ubuntu
   tasks:
    - name: Editing core.xml File
