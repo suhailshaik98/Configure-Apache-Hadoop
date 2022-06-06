@@ -36,6 +36,10 @@
          server.5=amazon-2:2888:3888
        backup: yes
        owner: ubuntu
+   - name: Remove zoo.cfg from etc
+     raw: rm -r -f  /etc/zookeeper/conf/zoo.cfg
+   - name: Creating zoo.cfg file
+     raw: touch /etc/zookeeper/conf/zoo.cfg     
    - name: Editing zoo.cfg File
      ansible.builtin.blockinfile:
        dest: /etc/zookeeper/conf/zoo.cfg
@@ -52,29 +56,12 @@
          server.5=amazon-2:2888:3888
        backup: yes
        owner: ubuntu  
-   - name: Creating myid file
+   - name: Remove /usr/share/zookeeper
      raw: rm -r -f  /usr/share/zookeeper
-   - name: Creating myid file
+   - name: Moving zookeeper to zookeeper
      raw: mv zookeeper /usr/share/zookeeper
  
    
-- hosts: amazon-2
-  become: yes
-  tasks:
-   - name: Editing MYID file
-     ansible.builtin.blockinfile:
-       dest: /etc/zookeeper/data/myid
-       block: |
-         2
-       backup: yes
-       owner: ubuntu
-   - name: Editing MYID file
-     ansible.builtin.blockinfile:
-       dest: /etc/zookeeper/conf/myid
-       block: |
-         2
-       backup: yes
-       owner: ubuntu
 - hosts: amazon-3
   become: yes
   tasks:
@@ -82,13 +69,30 @@
      ansible.builtin.blockinfile:
        dest: /etc/zookeeper/data/myid
        block: |
-         3
+         4
        backup: yes
        owner: ubuntu
    - name: Editing MYID file
      ansible.builtin.blockinfile:
        dest: /etc/zookeeper/conf/myid
        block: |
-         3
+         4
+       backup: yes
+       owner: ubuntu
+- hosts: amazon-2
+  become: yes
+  tasks:
+   - name: Editing MYID file
+     ansible.builtin.blockinfile:
+       dest: /etc/zookeeper/data/myid
+       block: |
+         5
+       backup: yes
+       owner: ubuntu
+   - name: Editing MYID file
+     ansible.builtin.blockinfile:
+       dest: /etc/zookeeper/conf/myid
+       block: |
+         5
        backup: yes
        owner: ubuntu
