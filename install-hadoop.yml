@@ -1,4 +1,4 @@
-- hosts: amazon_*
+- hosts: amazon-*
   become: yes
   pre_tasks:
    - name: Run the equivalent of "apt-get update" as a separate step
@@ -182,7 +182,7 @@
        dest: /home/ubuntu/hadoop/etc/hadoop/masters
        insertafter: EOF
        block: |
-         amazon_1
+         amazon-1
        backup: yes
        owner: ubuntu
 
@@ -192,16 +192,16 @@
        dest: /home/ubuntu/hadoop/etc/hadoop/workers
        insertafter: EOF
        block: |
-         amazon_2
-         amazon_3
-         amazon_4
+         amazon-2
+         amazon-3
+         amazon-4
        backup: yes
        owner: ubuntu
    - name: Transferring files to usr/local directory
      raw: mv hadoop /usr/local/hadoop
 
 
-- hosts: amazon_1
+- hosts: amazon-1
   become: yes
   tasks:
    - name: Changing permissions of the key
