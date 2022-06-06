@@ -10,7 +10,7 @@
        block: |
          <property>
          <name>fs.defaultFS</name>
-         <value>hdfs://10.128.0.3:9000</value>
+         <value>hdfs://google-1:9000</value>
          </property>
        backup: yes
        owner: suhailmsu21
@@ -24,7 +24,7 @@
        block: |
          <property>
          <name>mapred.job.tracker</name>
-         <value>10.128.0.3:54311</value>
+         <value>google-1:54311</value>
          </property>
          <property>
          <name>mapreduce.framework.name</name>
@@ -77,7 +77,7 @@
          </property>
          <property>
          <name>yarn.resourcemanager.hostname</name>
-         <value>10.128.0.3</value>
+         <value>google-1</value>
          </property>
        backup: yes
        owner: suhailmsu21
@@ -97,7 +97,7 @@
        dest: /usr/local/hadoop/etc/hadoop/masters
        insertafter: EOF
        block: |
-         10.128.0.3
+         google-1
        backup: yes
        owner: suhailmsu21
 
@@ -107,9 +107,11 @@
        dest: /usr/local/hadoop/etc/hadoop/workers
        insertafter: EOF
        block: |
-         10.128.0.4
-         10.128.0.6
-         10.128.0.8
+         google-1
+         google-2
+         google-3
+         amazon-3
+         amazon-2
        backup: yes
        owner: suhailmsu21
 
