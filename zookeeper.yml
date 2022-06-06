@@ -1,4 +1,4 @@
-- hosts: google_4
+- hosts: google-4
   become: yes
   tasks:
    - name: Get apache zookeeper
