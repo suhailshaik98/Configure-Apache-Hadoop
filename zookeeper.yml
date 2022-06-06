@@ -14,9 +14,11 @@
        state: present      
    - name: Changing name of the file zookeeper
      raw: mv apache-zookeeper-3.5.8-bin zookeeper
+   - name: Changing name of the file zookeeper
+     raw: mkdir /etc/zookeeper/data
    - name: Creating zoo.cfg file
      raw: touch /home/suhailmsu21/zookeeper/conf/zoo.cfg
-   - name: Creating zoo.cfg file
+   - name: Creating myid file
      raw: touch /etc/zookeeper/data/myid     
    - name: Editing zoo.cfg File
      ansible.builtin.blockinfile:
