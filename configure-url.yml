@@ -107,7 +107,6 @@
        dest: /usr/local/hadoop/etc/hadoop/workers
        insertafter: EOF
        block: |
-         google-1
          google-2
          google-3
          amazon-3
