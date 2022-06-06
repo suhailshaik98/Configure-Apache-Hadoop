@@ -23,7 +23,7 @@
 
    - name: removing existing hadoop file
      raw: rm -r -f /home/suhailmsu21/hadoop
-   - name: Editing core.xml File
+   - name: Editing bashrc
      ansible.builtin.blockinfile:
        dest: .bashrc
        insertafter: EOF
