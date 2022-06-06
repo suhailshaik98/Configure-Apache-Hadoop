@@ -1,0 +1,94 @@
+- hosts: amazon-*
+  become: yes
+  tasks:
+   - name: Get apache zookeeper
+     unarchive: 
+       src: https://archive.apache.org/dist/zookeeper/zookeeper-3.5.8/apache-zookeeper-3.5.8-bin.tar.gz
+       dest: /home/ubuntu
+       backup: yes
+       remote_src: yes
+       owner: ubuntu        
+   - name: Installing java apt
+     apt:
+       name: zookeeperd
+       state: present      
+   - name: Changing name of the file zookeeper
+     raw: mv apache-zookeeper-3.5.8-bin zookeeper
+   - name: Changing name of the file zookeeper
+     raw: mkdir /etc/zookeeper/data
+   - name: Creating zoo.cfg file
+     raw: touch /home/ubuntu/zookeeper/conf/zoo.cfg
+   - name: Creating myid file
+     raw: touch /etc/zookeeper/data/myid     
+   - name: Editing zoo.cfg File
+     ansible.builtin.blockinfile:
+       dest: /home/ubuntu/zookeeper/conf/zoo.cfg
+       block: |
+         tickTime=2000
+         dataDir=/etc/zookeeper/data
+         clientPort=2181
+         initLimit=5
+         syncLimit=2      
+         server.1=google-1:2888:3888
+         server.2=google-2:2888:3888
+         server.3=google-3:2888:3888
+         server.4=amazon-3:2888:3888
+         server.5=amazon-2:2888:3888
+       backup: yes
+       owner: ubuntu
+   - name: Editing zoo.cfg File
+     ansible.builtin.blockinfile:
+       dest: /etc/zookeeper/conf/zoo.cfg
+       block: |
+         tickTime=2000
+         dataDir=/etc/zookeeper/data
+         clientPort=2181
+         initLimit=5
+         syncLimit=2      
+         server.1=google-1:2888:3888
+         server.2=google-2:2888:3888
+         server.3=google-3:2888:3888
+         server.4=amazon-3:2888:3888
+         server.5=amazon-2:2888:3888
+       backup: yes
+       owner: ubuntu  
+   - name: Creating myid file
+     raw: rm -r -f  /usr/share/zookeeper
+   - name: Creating myid file
+     raw: mv zookeeper /usr/share/zookeeper
+ 
+   
+- hosts: amazon-2
+  become: yes
+  tasks:
+   - name: Editing MYID file
+     ansible.builtin.blockinfile:
+       dest: /etc/zookeeper/data/myid
+       block: |
+         2
+       backup: yes
+       owner: ubuntu
+   - name: Editing MYID file
+     ansible.builtin.blockinfile:
+       dest: /etc/zookeeper/conf/myid
+       block: |
+         2
+       backup: yes
+       owner: ubuntu
+- hosts: amazon-3
+  become: yes
+  tasks:
+   - name: Editing MYID file
+     ansible.builtin.blockinfile:
+       dest: /etc/zookeeper/data/myid
+       block: |
+         3
+       backup: yes
+       owner: ubuntu
+   - name: Editing MYID file
+     ansible.builtin.blockinfile:
+       dest: /etc/zookeeper/conf/myid
+       block: |
+         3
+       backup: yes
+       owner: ubuntu
