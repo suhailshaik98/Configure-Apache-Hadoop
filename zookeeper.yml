@@ -8,18 +8,22 @@
        src: https://archive.apache.org/dist/zookeeper/zookeeper-3.5.8/apache-zookeeper-3.5.8-bin.tar.gz
        dest: /home/suhailmsu21
        backup: yes
-       remote_src: yes
+       remote_src: true
        owner: suhailmsu21        
    - name: Installing zookeeperd apt
      apt:
        name: zookeeperd
        state: present      
-   - name: Changing name of the file zookeeper
+   - name: Removing from home file zookeeper
      raw: rm -r -f zookeeper  
    - name: Changing name of the file zookeeper
      raw: mv apache-zookeeper-3.5.8-bin zookeeper
    - name: Changing name of the file zookeeper
+     raw: mkdir /etc/zookeeper
+   - name: Changing name of the file zookeeper
      raw: mkdir /etc/zookeeper/data
+   - name: Changing name of the file zookeeper
+     raw: mkdir /etc/zookeeper/conf     
    - name: Creating zoo.cfg file
      raw: touch /home/suhailmsu21/zookeeper/conf/zoo.cfg
    - name: Creating myid file
