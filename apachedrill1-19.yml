@@ -31,7 +31,7 @@
        owner: suhailmsu21
    - name: Editing drill-env.sh File
      ansible.builtin.blockinfile:
-       dest: /etc/drill-site/drill-env.sh
+       dest: /home/suhailmsu21/apache-drill-1.19.0/conf/drill-env.sh
        insertafter: EOF
        block: |     
          export HADOOP_HOME=/usr/local/hadoop
