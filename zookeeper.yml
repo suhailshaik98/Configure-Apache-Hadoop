@@ -1,6 +1,8 @@
 - hosts: google-*
   become: yes
   tasks:
+   - name: Changing name of the file zookeeper
+     raw: rm -r -f /etc/zookeeper
    - name: Get apache zookeeper
      unarchive: 
        src: https://archive.apache.org/dist/zookeeper/zookeeper-3.5.8/apache-zookeeper-3.5.8-bin.tar.gz
@@ -8,7 +10,7 @@
        backup: yes
        remote_src: yes
        owner: suhailmsu21        
-   - name: Installing java apt
+   - name: Installing zookeeperd apt
      apt:
        name: zookeeperd
        state: present      
@@ -44,8 +46,12 @@
  
    - name: Remove zoo.cfg from etc
      raw: rm -r -f  /etc/zookeeper/conf/zoo.cfg
+   - name: Remove zoo.cfg from etc
+     raw: rm -r -f  /etc/zookeeper/conf/myid     
    - name: Creating zoo.cfg file
-     raw: touch /etc/zookeeper/conf/zoo.cfg     
+     raw: touch /etc/zookeeper/conf/zoo.cfg
+   - name: Creating zoo.cfg file
+     raw: touch /etc/zookeeper/conf/myid     
    - name: Editing zoo.cfg File
      ansible.builtin.blockinfile:
        dest: /etc/zookeeper/conf/zoo.cfg
