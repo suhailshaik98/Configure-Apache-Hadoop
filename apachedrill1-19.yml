@@ -8,12 +8,12 @@
        remote_src: True 
        owner: suhailmsu21             
    - name: Deleting existing drill-override file
-     raw: rm -r -f /home/suhail/apache-drill-1.19.0/conf/drill-override.conf
+     raw: rm -r -f /home/suhailmsu21/apache-drill-1.19.0/conf/drill-override.conf
    - name: Creating drill-override file
-     raw: touch /home/suhail/apache-drill-1.19.0/conf/drill-override.conf     
+     raw: touch /home/suhailmsu21/apache-drill-1.19.0/conf/drill-override.conf     
    - name: Editing drill-override.conf     
      ansible.builtin.blockinfile:
-       dest: /home/suhail/apache-drill-1.19.0/conf/drill-override.conf
+       dest: /home/suhailmsu21/apache-drill-1.19.0/conf/drill-override.conf
        insertafter: EOF
        block: |     
           drill.exec:{
@@ -26,7 +26,7 @@
    - name: Get apache hadoop
      get_url: 
        url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/drill-on-yarn.conf
-       dest: /home/suhail/apache-drill-1.19.0/conf
+       dest: /home/suhailmsu21/apache-drill-1.19.0/conf
        backup: yes
        owner: suhailmsu21
    - name: Editing drill-env.sh File
