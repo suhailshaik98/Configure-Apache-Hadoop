@@ -100,7 +100,7 @@
        block: |
          <property>
          <name>fs.defaultFS</name>
-         <value>hdfs://amazon_1:9000</value>
+         <value>hdfs://amazon-1:9000</value>
          </property>
        backup: yes
        owner: ubuntu
@@ -114,7 +114,7 @@
        block: |
          <property>
          <name>mapred.job.tracker</name>
-         <value>amazon_1:54311</value>
+         <value>amazon-1:54311</value>
          </property>
          <property>
          <name>mapreduce.framework.name</name>
