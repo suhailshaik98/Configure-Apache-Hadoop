@@ -10,7 +10,7 @@
        block: |
          <property>
          <name>fs.defaultFS</name>
-         <value>hdfs://google-1:9000</value>
+         <value>hdfs://amazon-1:9000</value>
          </property>
        backup: yes
        owner: ubuntu
@@ -24,7 +24,7 @@
        block: |
          <property>
          <name>mapred.job.tracker</name>
-         <value>google-1:54311</value>
+         <value>amazon-1:54311</value>
          </property>
          <property>
          <name>mapreduce.framework.name</name>
@@ -77,7 +77,7 @@
          </property>
          <property>
          <name>yarn.resourcemanager.hostname</name>
-         <value>google-1</value>
+         <value>amazon-1</value>
          </property>
        backup: yes
        owner: ubuntu
@@ -97,7 +97,7 @@
        dest: /usr/local/hadoop/etc/hadoop/masters
        insertafter: EOF
        block: |
-         google-1
+         amazon-1
        backup: yes
        owner: ubuntu
 
@@ -107,8 +107,7 @@
        dest: /usr/local/hadoop/etc/hadoop/workers
        insertafter: EOF
        block: |
-         google-2
-         google-3
+         amazon-4
          amazon-3
          amazon-2
        backup: yes
