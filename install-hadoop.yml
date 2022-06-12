@@ -1,4 +1,4 @@
-- hosts: amazon-5
+- hosts: amazon-*
   become: yes
   pre_tasks:
    - name: Run the equivalent of "apt-get update" as a separate step
@@ -202,7 +202,7 @@
      raw: mv hadoop /usr/local/hadoop
 
 
-- hosts: amazon-5
+- hosts: amazon-1
   become: yes
   tasks:
    - name: Changing permissions of the key
@@ -219,7 +219,7 @@
      apt:
        name: python3-pip
        state: present
-- hosts: amazon-5
+- hosts: amazon-1
   become_user: ubuntu
   tasks:
    - name: Installing pip
