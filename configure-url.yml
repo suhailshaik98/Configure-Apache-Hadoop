@@ -108,7 +108,7 @@
        insertafter: EOF
        block: |
          ec2-34-228-32-104.compute-1.amazonaws.com
-         c2-107-21-160-191.compute-1.amazonaws.com
+         ec2-107-21-160-191.compute-1.amazonaws.com
          ec2-34-228-6-42.compute-1.amazonaws.com
        backup: yes
        owner: ubuntu
