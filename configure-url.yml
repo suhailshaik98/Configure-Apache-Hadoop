@@ -10,7 +10,7 @@
        block: |
          <property>
          <name>fs.defaultFS</name>
-         <value>hdfs://ec2-54-89-187-48.compute-1.amazonaws.com:9000</value>
+         <value>hdfs://ec2-54-174-162-108.compute-1.amazonaws.com:9000</value>
          </property>
        backup: yes
        owner: ubuntu
@@ -24,7 +24,7 @@
        block: |
          <property>
          <name>mapred.job.tracker</name>
-         <value>ec2-54-89-187-48.compute-1.amazonaws.com:54311</value>
+         <value>ec2-54-174-162-108.compute-1.amazonaws.com:54311</value>
          </property>
          <property>
          <name>mapreduce.framework.name</name>
@@ -77,7 +77,7 @@
          </property>
          <property>
          <name>yarn.resourcemanager.hostname</name>
-         <value>ec2-54-89-187-48.compute-1.amazonaws.com</value>
+         <value>ec2-54-174-162-108.compute-1.amazonaws.com</value>
          </property>
        backup: yes
        owner: ubuntu
@@ -97,7 +97,7 @@
        dest: /usr/local/hadoop/etc/hadoop/masters
        insertafter: EOF
        block: |
-         ec2-54-89-187-48.compute-1.amazonaws.com
+         ec2-54-174-162-108.compute-1.amazonaws.com
        backup: yes
        owner: ubuntu
 
@@ -110,6 +110,7 @@
          ec2-54-234-102-192.compute-1.amazonaws.com
          ec2-3-90-62-145.compute-1.amazonaws.com
          ec2-54-221-52-161.compute-1.amazonaws.com
+         ec2-54-89-187-48.compute-1.amazonaws.com
        backup: yes
        owner: ubuntu
 
