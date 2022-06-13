@@ -44,10 +44,12 @@
        owner: ubuntu
 
 
-   - name: Modifying hosts file     
-     ansible.builtin.copy:
-       src: /etc/hosts
+   - name: Changing Hosts file
+     get_url: 
+       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/hosts
        dest: /etc/hosts
+       backup: yes
+       owner: ubuntu
 
    - name: Editing Bash File
      
@@ -211,18 +213,18 @@
        dest: /home/ubuntu/
        mode: '400'
        owner: ubuntu
-   - name: Installing jupyter notebook
-     apt:
-       name: jupyter-notebook
-       state: present
-   - name: Installing pip
-     apt:
-       name: python3-pip
-       state: present
-- hosts: amazon-1
-  become_user: ubuntu
-  tasks:
-   - name: Installing pip
-     pip:
-       name: findspark
+#   - name: Installing jupyter notebook
+#     apt:
+#       name: jupyter-notebook
+#       state: present
+#   - name: Installing pip
+#     apt:
+#       name: python3-pip
+#       state: present
+#- hosts: amazon-1
+#  become_user: ubuntu
+#  tasks:
+#   - name: Installing pip
+#     pip:
+#       name: findspark
 
