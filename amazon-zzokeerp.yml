@@ -87,7 +87,7 @@
        backup: yes
        owner: ubuntu
    - name: Get apache hadoop
-     raw:  mv /etc/zookeeper/data/myid3 /etc/zookeeper/conf/myid
+     raw:  mv /etc/zookeeper/conf/myid3 /etc/zookeeper/conf/myid
 - hosts: amazon-2
   become: yes
   tasks:
@@ -106,7 +106,7 @@
        backup: yes
        owner: ubuntu
    - name: Get apache hadoop
-     raw:  mv /etc/zookeeper/data/myid2 /etc/zookeeper/conf/myid
+     raw:  mv /etc/zookeeper/conf/myid2 /etc/zookeeper/conf/myid
 - hosts: amazon-1
   become: yes
   tasks:
@@ -140,4 +140,4 @@
        backup: yes
        owner: ubuntu
    - name: Get apache hadoop
-     raw:  mv /etc/zookeeper/data/myid4 /etc/zookeeper/conf/myid
+     raw:  mv /etc/zookeeper/conf/myid4 /etc/zookeeper/conf/myid
