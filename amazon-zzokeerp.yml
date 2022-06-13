@@ -1,8 +1,6 @@
 - hosts: amazon-*
   become: yes
   tasks:
-   - name: Changing name of the file zookeeper
-     raw: rm -r -f /etc/zookeeper
    - name: Get apache zookeeper
      unarchive: 
        src: https://archive.apache.org/dist/zookeeper/zookeeper-3.5.8/apache-zookeeper-3.5.8-bin.tar.gz
@@ -14,6 +12,8 @@
      apt:
        name: zookeeperd
        state: present      
+   - name: Changing name of the file zookeeper
+     raw: rm -r -f /etc/zookeeper       
    - name: Removing from home file zookeeper
      raw: rm -r -f zookeeper
    - name: Changing name of the file zookeeper
