@@ -7,11 +7,7 @@
        dest: /home/ubuntu
        backup: yes
        remote_src: true
-       owner: ubuntu        
-   - name: Installing zookeeperd apt
-     apt:
-       name: zookeeperd
-       state: present      
+       owner: ubuntu           
    - name: Changing name of the file zookeeper
      raw: rm -r -f /etc/zookeeper       
    - name: Removing from home file zookeeper
