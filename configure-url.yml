@@ -112,7 +112,7 @@
          ec2-54-196-181-216.compute-1.amazonaws.com
        backup: yes
        owner: ubuntu
-   - name: Get apache hadoop
+   - name: Changing Hosts file
      get_url: 
        url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/hosts
        dest: /etc/hosts
