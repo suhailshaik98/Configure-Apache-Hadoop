@@ -1,0 +1,11 @@
+127.0.0.1       localhost
+::1     localhost ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+172.20.0.5      awx
+172.31.23.172	amazon-1
+172.31.27.168	amazon-2
+172.31.18.151	amazon-3
+172.31.18.86	amazon-4
