@@ -19,6 +19,8 @@
    - name: Changing name of the file zookeeper
      raw: mv apache-zookeeper-3.5.8-bin zookeeper
    - name: Changing name of the file zookeeper
+     raw: mkdir /etc/zookeeper     
+   - name: Changing name of the file zookeeper
      raw: mkdir /etc/zookeeper/data
    - name: Changing name of the file zookeeper
      raw: mkdir /etc/zookeeper/conf     
