@@ -79,7 +79,7 @@
        url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/myid3
        dest: /etc/zookeeper/data
        backup: yes
-       owner: suhailmsu21
+       owner: ubuntu
    - name: Get apache hadoop
      raw:  mv /etc/zookeeper/data/myid3 /etc/zookeeper/data/myid
    - name: Download Myid
@@ -87,7 +87,7 @@
        url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/myid3
        dest: /etc/zookeeper/conf
        backup: yes
-       owner: suhailmsu21
+       owner: ubuntu
    - name: Get apache hadoop
      raw:  mv /etc/zookeeper/data/myid3 /etc/zookeeper/conf/myid
 - hosts: amazon-2
@@ -98,7 +98,7 @@
        url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/myid2
        dest: /etc/zookeeper/data
        backup: yes
-       owner: suhailmsu21
+       owner: ubuntu
    - name: Get apache hadoop
      raw:  mv /etc/zookeeper/data/myid2 /etc/zookeeper/data/myid
    - name: Download Myid
@@ -106,7 +106,7 @@
        url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/myid2
        dest: /etc/zookeeper/conf
        backup: yes
-       owner: suhailmsu21
+       owner: ubuntu
    - name: Get apache hadoop
      raw:  mv /etc/zookeeper/data/myid2 /etc/zookeeper/conf/myid
 - hosts: amazon-1
@@ -117,13 +117,13 @@
        url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/myid
        dest: /etc/zookeeper/data
        backup: yes
-       owner: suhailmsu21
+       owner: ubuntu
    - name: Download Myid
      get_url: 
        url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/myid
        dest: /etc/zookeeper/conf
        backup: yes
-       owner: suhailmsu21
+       owner: ubuntu
 - hosts: amazon-4
   become: yes
   tasks:
@@ -132,7 +132,7 @@
        url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/myid4
        dest: /etc/zookeeper/data
        backup: yes
-       owner: suhailmsu21
+       owner: ubuntu
    - name: Get apache hadoop
      raw:  mv /etc/zookeeper/data/myid4 /etc/zookeeper/data/myid
    - name: Download Myid
@@ -140,6 +140,6 @@
        url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/myid4
        dest: /etc/zookeeper/conf
        backup: yes
-       owner: suhailmsu21
+       owner: ubuntu
    - name: Get apache hadoop
      raw:  mv /etc/zookeeper/data/myid4 /etc/zookeeper/conf/myid
