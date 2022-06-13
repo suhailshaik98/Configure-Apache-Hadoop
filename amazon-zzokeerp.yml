@@ -15,19 +15,15 @@
        name: zookeeperd
        state: present      
    - name: Removing from home file zookeeper
-     raw: rm -r -f zookeeper  
+     raw: rm -r -f zookeeper
    - name: Changing name of the file zookeeper
      raw: mv apache-zookeeper-3.5.8-bin zookeeper
-   - name: Changing name of the file zookeeper
-     raw: mkdir /etc/zookeeper
    - name: Changing name of the file zookeeper
      raw: mkdir /etc/zookeeper/data
    - name: Changing name of the file zookeeper
      raw: mkdir /etc/zookeeper/conf     
    - name: Creating zoo.cfg file
-     raw: touch /home/ubuntu/zookeeper/conf/zoo.cfg
-   - name: Creating myid file
-     raw: touch /etc/zookeeper/data/myid     
+     raw: touch /home/ubuntu/zookeeper/conf/zoo.cfg 
    - name: Editing zoo.cfg File
      ansible.builtin.blockinfile:
        dest: /home/ubuntu/zookeeper/conf/zoo.cfg
