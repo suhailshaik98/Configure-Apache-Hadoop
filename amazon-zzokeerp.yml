@@ -1,21 +1,29 @@
 - hosts: amazon-*
   become: yes
   tasks:
+   - name: Changing name of the file zookeeper
+     raw: rm -r -f /etc/zookeeper
    - name: Get apache zookeeper
      unarchive: 
        src: https://archive.apache.org/dist/zookeeper/zookeeper-3.5.8/apache-zookeeper-3.5.8-bin.tar.gz
        dest: /home/ubuntu
        backup: yes
-       remote_src: yes
+       remote_src: true
        owner: ubuntu        
-   - name: Installing java apt
+   - name: Installing zookeeperd apt
      apt:
        name: zookeeperd
        state: present      
+   - name: Removing from home file zookeeper
+     raw: rm -r -f zookeeper  
    - name: Changing name of the file zookeeper
      raw: mv apache-zookeeper-3.5.8-bin zookeeper
    - name: Changing name of the file zookeeper
+     raw: mkdir /etc/zookeeper
+   - name: Changing name of the file zookeeper
      raw: mkdir /etc/zookeeper/data
+   - name: Changing name of the file zookeeper
+     raw: mkdir /etc/zookeeper/conf     
    - name: Creating zoo.cfg file
      raw: touch /home/ubuntu/zookeeper/conf/zoo.cfg
    - name: Creating myid file
@@ -29,17 +37,23 @@
          clientPort=2181
          initLimit=5
          syncLimit=2      
-         server.1=google-1:2888:3888
-         server.2=google-2:2888:3888
-         server.3=google-3:2888:3888
-         server.4=amazon-3:2888:3888
-         server.5=amazon-2:2888:3888
+         server.1=amazon-1:2888:3888
+         server.2=amazon-2:2888:3888
+         server.3=amazon-3:2888:3888
+         server.4=amazon-4:2888:3888
        backup: yes
-       owner: ubuntu
+       owner: ubuntu 
+   - name: Creating myid file
+     raw: rm -r -f  /usr/share/zookeeper
+   - name: Creating myid file
+     raw: mv zookeeper /usr/share/zookeeper
+ 
    - name: Remove zoo.cfg from etc
      raw: rm -r -f  /etc/zookeeper/conf/zoo.cfg
+   - name: Remove zoo.cfg from etc
+     raw: rm -r -f  /etc/zookeeper/conf/myid     
    - name: Creating zoo.cfg file
-     raw: touch /etc/zookeeper/conf/zoo.cfg     
+     raw: touch /etc/zookeeper/conf/zoo.cfg    
    - name: Editing zoo.cfg File
      ansible.builtin.blockinfile:
        dest: /etc/zookeeper/conf/zoo.cfg
@@ -49,50 +63,83 @@
          clientPort=2181
          initLimit=5
          syncLimit=2      
-         server.1=google-1:2888:3888
-         server.2=google-2:2888:3888
-         server.3=google-3:2888:3888
-         server.4=amazon-3:2888:3888
-         server.5=amazon-2:2888:3888
+         server.1=amazon-1:2888:3888
+         server.2=amazon-2:2888:3888
+         server.3=amazon-3:2888:3888
+         server.4=amazon-4:2888:3888
        backup: yes
-       owner: ubuntu  
-   - name: Remove /usr/share/zookeeper
-     raw: rm -r -f  /usr/share/zookeeper
-   - name: Moving zookeeper to zookeeper
-     raw: mv zookeeper /usr/share/zookeeper
- 
+       owner: ubuntu
+
    
 - hosts: amazon-3
   become: yes
   tasks:
-   - name: Editing MYID file
-     ansible.builtin.blockinfile:
-       dest: /etc/zookeeper/data/myid
-       block: |
-         4
+   - name: Download Myid
+     get_url: 
+       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/myid3
+       dest: /etc/zookeeper/data
        backup: yes
-       owner: ubuntu
-   - name: Editing MYID file
-     ansible.builtin.blockinfile:
-       dest: /etc/zookeeper/conf/myid
-       block: |
-         4
+       owner: suhailmsu21
+   - name: Get apache hadoop
+     raw:  mv /etc/zookeeper/data/myid3 /etc/zookeeper/data/myid
+   - name: Download Myid
+     get_url: 
+       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/myid3
+       dest: /etc/zookeeper/conf
        backup: yes
-       owner: ubuntu
+       owner: suhailmsu21
+   - name: Get apache hadoop
+     raw:  mv /etc/zookeeper/data/myid3 /etc/zookeeper/conf/myid
 - hosts: amazon-2
   become: yes
   tasks:
-   - name: Editing MYID file
-     ansible.builtin.blockinfile:
-       dest: /etc/zookeeper/data/myid
-       block: |
-         5
+   - name: Download Myid
+     get_url: 
+       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/myid2
+       dest: /etc/zookeeper/data
        backup: yes
-       owner: ubuntu
-   - name: Editing MYID file
-     ansible.builtin.blockinfile:
-       dest: /etc/zookeeper/conf/myid
-       block: |
-         5
+       owner: suhailmsu21
+   - name: Get apache hadoop
+     raw:  mv /etc/zookeeper/data/myid2 /etc/zookeeper/data/myid
+   - name: Download Myid
+     get_url: 
+       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/myid2
+       dest: /etc/zookeeper/conf
        backup: yes
-       owner: ubuntu
+       owner: suhailmsu21
+   - name: Get apache hadoop
+     raw:  mv /etc/zookeeper/data/myid2 /etc/zookeeper/conf/myid
+- hosts: amazon-1
+  become: yes
+  tasks:
+   - name: Download Myid
+     get_url: 
+       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/myid
+       dest: /etc/zookeeper/data
+       backup: yes
+       owner: suhailmsu21
+   - name: Download Myid
+     get_url: 
+       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/myid
+       dest: /etc/zookeeper/conf
+       backup: yes
+       owner: suhailmsu21
+- hosts: amazon-4
+  become: yes
+  tasks:
+   - name: Download Myid
+     get_url: 
+       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/myid4
+       dest: /etc/zookeeper/data
+       backup: yes
+       owner: suhailmsu21
+   - name: Get apache hadoop
+     raw:  mv /etc/zookeeper/data/myid4 /etc/zookeeper/data/myid
+   - name: Download Myid
+     get_url: 
+       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/myid4
+       dest: /etc/zookeeper/conf
+       backup: yes
+       owner: suhailmsu21
+   - name: Get apache hadoop
+     raw:  mv /etc/zookeeper/data/myid4 /etc/zookeeper/conf/myid
