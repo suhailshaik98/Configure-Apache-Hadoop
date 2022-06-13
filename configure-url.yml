@@ -10,7 +10,7 @@
        block: |
          <property>
          <name>fs.defaultFS</name>
-         <value>hdfs://ec2-54-226-63-43.compute-1.amazonaws.com:9000</value>
+         <value>hdfs://amazon-1:9000</value>
          </property>
        backup: yes
        owner: ubuntu
@@ -24,7 +24,7 @@
        block: |
          <property>
          <name>mapred.job.tracker</name>
-         <value>ec2-54-226-63-43.compute-1.amazonaws.com:54311</value>
+         <value>amazon-1:54311</value>
          </property>
          <property>
          <name>mapreduce.framework.name</name>
@@ -77,7 +77,7 @@
          </property>
          <property>
          <name>yarn.resourcemanager.hostname</name>
-         <value>ec2-54-226-63-43.compute-1.amazonaws.com</value>
+         <value>amazon-1</value>
          </property>
        backup: yes
        owner: ubuntu
@@ -97,7 +97,7 @@
        dest: /usr/local/hadoop/etc/hadoop/masters
        insertafter: EOF
        block: |
-         ec2-54-226-63-43.compute-1.amazonaws.com
+         amazon-1
        backup: yes
        owner: ubuntu
 
@@ -107,19 +107,13 @@
        dest: /usr/local/hadoop/etc/hadoop/workers
        insertafter: EOF
        block: |
-         ec2-3-95-14-23.compute-1.amazonaws.com
-         ec2-34-230-31-93.compute-1.amazonaws.com
-         ec2-54-196-181-216.compute-1.amazonaws.com
+         amazon-2
+         amazon-3
+         amazon-4
        backup: yes
        owner: ubuntu
 - hosts: amazon-*
   become: yes
   tasks:       
-   - name: Changing Hosts file
-     get_url: 
-       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/hosts
-       dest: /etc/hosts
-       backup: yes
-       owner: ubuntu
    - name: Rebooting Machines
      reboot:
