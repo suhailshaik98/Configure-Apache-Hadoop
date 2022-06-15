@@ -122,7 +122,7 @@
        owner: ubuntu
    - name: Get apache zeppelin
      unarchive: 
-       src: hhttps://dlcdn.apache.org/zeppelin/zeppelin-0.10.1/zeppelin-0.10.1-bin-all.tgz
+       src: https://dlcdn.apache.org/zeppelin/zeppelin-0.10.1/zeppelin-0.10.1-bin-all.tgz
        dest: /home/ubuntu
        remote_src: True 
        owner: ubuntu          
