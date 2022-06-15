@@ -111,8 +111,29 @@
          amazon-3
        backup: yes
        owner: ubuntu
+- hosts: amazon-1
+  become: yes
+  tasks:
+   - name: Download drill
+     get_url: 
+       url:   https://dlcdn.apache.org/drill/drill-1.19.0/apache-drill-1.19.0.tar.gz
+       dest: /home/ubuntu
+       remote_src: yes
+       owner: ubuntu
+   - name: Get apache zeppelin
+     unarchive: 
+       src: hhttps://dlcdn.apache.org/zeppelin/zeppelin-0.10.1/zeppelin-0.10.1-bin-all.tgz
+       dest: /home/ubuntu
+       remote_src: True 
+       owner: ubuntu          
 - hosts: amazon-*
   become: yes
-  tasks:       
+  tasks:
+   - name: Changing Hosts file
+     get_url: 
+       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/hosts
+       dest: /etc/hosts
+       backup: yes
+       owner: ubuntu  
    - name: Rebooting Machines
      reboot:
