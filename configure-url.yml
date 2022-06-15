@@ -108,8 +108,6 @@
        insertafter: EOF
        block: |
          amazon-2
-         amazon-3
-         amazon-4
        backup: yes
        owner: ubuntu
 - hosts: amazon-*
