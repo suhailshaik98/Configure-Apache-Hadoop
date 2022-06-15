@@ -1,4 +1,4 @@
-- hosts: amazon-*
+- hosts: amazon-1
   become: yes
   tasks:
    - name: Get apache zookeeper
@@ -6,7 +6,19 @@
        src: https://dlcdn.apache.org/drill/drill-1.19.0/apache-drill-1.19.0.tar.gz
        dest: /home/ubuntu
        remote_src: True 
-       owner: ubuntu             
+       owner: ubuntu
+   - name: Download drill
+     get_url: 
+       url:   https://dlcdn.apache.org/drill/drill-1.19.0/apache-drill-1.19.0.tar.gz
+       dest: /home/ubuntu
+       remote_src: yes
+       owner: ubuntu
+   - name: Get apache zeppelin
+     unarchive: 
+       src: https://dlcdn.apache.org/zeppelin/zeppelin-0.10.1/zeppelin-0.10.1-bin-all.tgz
+       dest: /home/ubuntu
+       remote_src: True 
+       owner: ubuntu          
    - name: Deleting existing drill-override file
      raw: rm -r -f /home/ubuntu/apache-drill-1.19.0/conf/drill-override.conf
    - name: Creating drill-override file
