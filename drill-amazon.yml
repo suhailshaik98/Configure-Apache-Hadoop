@@ -18,7 +18,7 @@
        block: |     
           drill.exec:{
             cluster-id: "cluster1",
-            zk.connect: "amazon-1:2181,amazon-2:2181,amazon-3:2181,amazon-4:2181"
+            zk.connect: "amazon-1:2181,amazon-2:2181"
           }
        backup: yes
        owner: ubuntu 
