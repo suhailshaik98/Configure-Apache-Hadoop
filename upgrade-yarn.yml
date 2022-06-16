@@ -17,15 +17,15 @@
          </property>
          <property>
          <name>yarn.app.mapreduce.am.resource.mb</name>
-         <value>6826</value>
+         <value>10240</value>
          </property>
          <property>
          <name>mapreduce.map.memory.mb</name>
-         <value>3413</value>
+         <value>5120</value>
          </property>
          <property>
          <name>mapreduce.reduce.memory.mb</name>
-         <value>6826</value>
+         <value>10240</value>
          </property>
          <property>
          <name>yarn.app.mapreduce.am.env</name>
@@ -63,15 +63,15 @@
          </property>
          <property>         
          <name>yarn.nodemanager.resource.memory-mb</name>
-         <value>12288</value>
+         <value>18432</value>
          </property>
          <property>
          <name>yarn.scheduler.maximum-allocation-mb</name>
-         <value>12288</value>
+         <value>18342</value>
          </property>
          <property>
          <name>yarn.scheduler.minimum-allocation-mb</name>
-         <value>3413</value>
+         <value>5120</value>
          </property>
          <property>
          <name>yarn.nodemanager.vmem-check-enabled</name>
