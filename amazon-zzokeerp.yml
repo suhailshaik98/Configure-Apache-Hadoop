@@ -33,6 +33,10 @@
          syncLimit=2
          server.1=amazon-1:2888:3888
          server.2=amazon-2:2888:3888
+         server.3=amazon-3:2888:3888
+         server.4=amazon-4:2888:3888
+         server.5=amazon-5:2888:3888
+         server.6=amazon-6:2888:3888
        backup: yes
        owner: ubuntu 
    - name: Creating myid file
@@ -57,6 +61,10 @@
          syncLimit=2
          server.1=amazon-1:2888:3888
          server.2=amazon-2:2888:3888
+         server.3=amazon-3:2888:3888
+         server.4=amazon-4:2888:3888
+         server.5=amazon-5:2888:3888
+         server.6=amazon-6:2888:3888
        backup: yes
        owner: ubuntu
 
