@@ -9,12 +9,12 @@
        block: |
          spark.master yarn
          spark.driver.memory 1g
-         spark.yarn.am.memory 1g
-         spark.executor.memory 15g
+         spark.yarn.am.memory 3g
+         spark.executor.memory 25g
          spark.eventLog.enabled true
-         spark.eventLog.dir hdfs://ec2-3-85-47-148.compute-1.amazonaws.com:9000/spark-logs
+         spark.eventLog.dir hdfs://amazon-1:9000/spark-logs
          spark.history.provider org.apache.spark.deploy.history.FsHistoryProvider
-         spark.history.fs.logDirectory hdfs://ec2-3-85-47-148.compute-1.amazonaws.com/spark-logs
+         spark.history.fs.logDirectory hdfs://amazon-1/spark-logs
          spark.history.fs.update.interval 10s
          spark.history.ui.port 18080
          spark.history.ui.enabled true
