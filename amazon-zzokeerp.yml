@@ -151,4 +151,24 @@
        backup: yes
        owner: ubuntu
    - name: Get apache hadoop
-     raw:  mv /etc/zookeeper/conf/myid5 /etc/zookeeper/conf/myid     
+     raw:  mv /etc/zookeeper/conf/myid5 /etc/zookeeper/conf/myid
+- hosts: amazon-6
+  become: yes
+  tasks:
+   - name: Download Myid
+     get_url: 
+       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/myid6
+       dest: /etc/zookeeper/data
+       backup: yes
+       owner: ubuntu
+   - name: Get apache hadoop
+     raw:  mv /etc/zookeeper/data/myid6 /etc/zookeeper/data/myid
+   - name: Download Myid
+     get_url: 
+       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/myid6
+       dest: /etc/zookeeper/conf
+       backup: yes
+       owner: ubuntu
+   - name: Get apache hadoop
+     raw:  mv /etc/zookeeper/conf/myid6 /etc/zookeeper/conf/myid     
+    
