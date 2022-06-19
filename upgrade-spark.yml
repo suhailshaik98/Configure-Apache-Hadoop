@@ -4,18 +4,18 @@
 
    - name: Get apache spark
      get_url: 
-       url: https://dlcdn.apache.org/spark/spark-3.0.3/spark-3.0.3-bin-hadoop2.7.tgz
+       url: https://dlcdn.apache.org/spark/spark-2.4.8/spark-2.4.8-bin-hadoop2.7.tgz
        dest: /home/ubuntu
 
    - name: Extract spark
      ansible.builtin.unarchive:
-       src: /home/ubuntu/spark-3.0.3-bin-hadoop2.7.tgz
+       src: /home/ubuntu/spark-2.4.8-bin-hadoop2.7.tgz
        dest: /home/ubuntu
        remote_src: True
        owner: ubuntu
 
    - name: changing directory from spark-3.2.1 to spark
-     raw: mv spark-3.0.3-bin-hadoop2.7 spark/
+     raw: mv spark-2.4.8-bin-hadoop2.7 spark/
    - name: changing directory from spark conf template to spark conf
      raw: mv spark/conf/spark-defaults.conf.template spark/conf/spark-defaults.conf
    - name: removing old spark file
