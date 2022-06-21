@@ -79,13 +79,6 @@
        mode: '0700'
        owner: suhailmsu21
 
-
-   - name: Modifying hosts file     
-     ansible.builtin.copy:
-       src: /etc/hosts
-       dest: /etc/hosts
-
-
    - name: Editing hadoop-env.sh 
      ansible.builtin.lineinfile:
        dest: /home/suhailmsu21/hadoop/etc/hadoop/hadoop-env.sh
