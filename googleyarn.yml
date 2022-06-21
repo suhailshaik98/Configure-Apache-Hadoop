@@ -9,7 +9,7 @@
        block: |
          <property>
          <name>mapred.job.tracker</name>
-         <value>10.128.0.9:54311</value>
+         <value>google-1:54311</value>
          </property>
          <property>
          <name>mapreduce.framework.name</name>
@@ -59,7 +59,7 @@
          </property>
          <property>
          <name>yarn.resourcemanager.hostname</name>
-         <value>10.128.0.9</value>
+         <value>google-1</value>
          </property>
          <property>         
          <name>yarn.nodemanager.resource.memory-mb</name>
