@@ -107,9 +107,9 @@
        dest: /usr/local/hadoop/etc/hadoop/workers
        insertafter: EOF
        block: |
-         10.128.0.8
-         10.128.0.12
-         10.128.0.11
+         google-2
+         google-3
+         google-4
        backup: yes
        owner: suhailmsu21
 
