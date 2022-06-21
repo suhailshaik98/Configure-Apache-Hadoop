@@ -23,3 +23,9 @@
          spark.ui.port 4040
        backup: yes
        owner: ubuntu
+   - name: Changing Hosts file
+     get_url: 
+       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/hosts
+       dest: /etc/hosts
+       backup: yes
+       owner: ubuntu
