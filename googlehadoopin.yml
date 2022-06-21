@@ -13,7 +13,12 @@
      get_url: 
        url: https://archive.apache.org/dist/hadoop/common/hadoop-3.2.2/hadoop-3.2.2.tar.gz
        dest: /home/suhailmsu21
-
+   - name: Changing Hosts file
+     get_url: 
+       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/hosts
+       dest: /etc/hosts
+       backup: yes
+       owner: suhailmsu21
    - name: Extract  hadoop
      ansible.builtin.unarchive:
        src: /home/suhailmsu21/hadoop-3.2.2.tar.gz
