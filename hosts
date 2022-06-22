@@ -4,7 +4,7 @@ fe00::0 ip6-localnet
 ff00::0 ip6-mcastprefix
 ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
-10.128.0.21	amazon-1
-10.128.0.22	amazon-2
-10.128.0.23	amazon-3
-10.128.0.20	amazon-4
+10.128.0.21	google-1
+10.128.0.22	google-2
+10.128.0.23	google-3
+10.128.0.20	google-4
