@@ -13,7 +13,7 @@
          export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
          export SPARK_MASTER_HOST=amazon-1
        backup: yes
-       owner: suhailmsu21         
+       owner: ubuntu         
    - name: Removing some lines in slaves start File
      ansible.builtin.lineinfile:
        path: /usr/local/spark/conf/slaves
@@ -30,7 +30,7 @@
          amazon-3
          amazon-4
        backup: yes
-       owner: suhailmsu21
+       owner: ubuntu
    - name: Installing jupyter apt
      apt:
        name: jupyter
