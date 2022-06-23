@@ -20,7 +20,7 @@
        regexp: 'localhost'
        line: ''
        backrefs: yes
-       owner: suhailmsu21
+       owner: ubuntu
    - name: Modifying slaves file
      ansible.builtin.blockinfile:
        dest: /usr/local/spark/conf/slaves
