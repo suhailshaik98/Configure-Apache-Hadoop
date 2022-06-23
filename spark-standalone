@@ -1,0 +1,37 @@
+- hosts: amazon-*
+  become: yes
+  tasks:
+   - name: Creating spark-defaults file
+     raw: touch /usr/local/spark/conf/slaves
+   - name: Creating spark-defaults file
+     raw: touch /usr/local/spark/conf/spark-env.sh     
+   - name: update spark-defaults File
+     ansible.builtin.blockinfile:
+       dest: /usr/local/spark/conf/spark-env.sh
+       insertafter: EOF
+       block: |
+         export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+         export SPARK_MASTER_HOST=amazon-1
+       backup: yes
+       owner: suhailmsu21         
+   - name: Removing some lines in slaves start File
+     ansible.builtin.lineinfile:
+       path: /usr/local/spark/conf/slaves
+       regexp: 'localhost'
+       line: ''
+       backrefs: yes
+       owner: suhailmsu21
+   - name: Modifying slaves file
+     ansible.builtin.blockinfile:
+       dest: /usr/local/spark/conf/slaves
+       insertafter: EOF
+       block: |
+         amazon-2
+         amazon-3
+         amazon-4
+       backup: yes
+       owner: suhailmsu21
+   - name: Installing jupyter apt
+     apt:
+       name: jupyter
+       state: present       
