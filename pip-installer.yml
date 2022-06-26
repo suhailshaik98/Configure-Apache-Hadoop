@@ -9,12 +9,17 @@
      apt:
        name: python-pip
        state: present
+   - name: install the package, force upgrade
+     pip:
+       name: pip
+       executable: pip3
+       state: latest       
    - name: Installing findspark
      pip:
        name: findspark
-   - name: Installing tensorflow1.4.1
+   - name: Installing tensorflow1.14.0
      pip:
-       name: tensorflow==1.4.1
+       name: tensorflow==1.14.1
        executable: pip3
    - name: Installing tensorframes
      pip:
