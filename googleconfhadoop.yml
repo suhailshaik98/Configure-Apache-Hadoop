@@ -1,4 +1,4 @@
-- hosts: google-*
+- hosts: google-3
   become_user: suhailmsu21
   tasks:
    - name: Editing core.xml File
