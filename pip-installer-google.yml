@@ -17,9 +17,9 @@
    - name: Installing findspark
      pip:
        name: findspark
-   - name: Installing tensorflow1.14.0
+   - name: Installing tensorflow1.15.0
      pip:
-       name: tensorflow==1.14.0
+       name: tensorflow==1.15.0
        executable: pip3
    - name: Installing tensorframes
      pip:
