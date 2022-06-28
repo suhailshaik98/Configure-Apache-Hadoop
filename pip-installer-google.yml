@@ -1,4 +1,4 @@
-- hosts: amazon-*
+- hosts: google-*
   become: yes
   tasks:
    - name: Installing pip
