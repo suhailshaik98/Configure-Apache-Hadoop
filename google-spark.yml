@@ -1,4 +1,4 @@
-- hosts: google-3
+- hosts: google-*
   become: yes
   tasks:
 
