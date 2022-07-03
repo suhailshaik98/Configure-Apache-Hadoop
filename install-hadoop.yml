@@ -150,7 +150,7 @@
        owner: ubuntu
    - name: Removing accessibility.properties
      ansible.builtin.lineinfile:
-       path: sudo vim /etc/java-8-openjdk/accessibility.properties
+       path: /etc/java-8-openjdk/accessibility.properties
        regexp: 'assistive_technologies=org.GNOME.Accessibility.AtkWrapper'
        line: '#assistive_technologies=org.GNOME.Accessibility.AtkWrapper'
        backrefs: yes
