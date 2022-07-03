@@ -90,8 +90,6 @@
        backrefs: yes
        owner: ubuntu
 
-
-
    - name: Modifying masters file
      ansible.builtin.blockinfile:
        dest: /usr/local/hadoop/etc/hadoop/masters
@@ -111,6 +109,7 @@
          amazon-3
          amazon-4
          amazon-5
+         amazon-6
        backup: yes
        owner: ubuntu
        
