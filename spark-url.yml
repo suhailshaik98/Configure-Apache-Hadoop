@@ -10,7 +10,7 @@
          spark.master yarn
          spark.driver.memory 1g
          spark.yarn.am.memory 1g
-         spark.executor.memory 16g
+         spark.executor.memory 6g
          spark.eventLog.enabled true
          spark.eventLog.dir hdfs://amazon-1:9000/spark-logs
          spark.history.provider org.apache.spark.deploy.history.FsHistoryProvider
@@ -20,6 +20,8 @@
          spark.history.ui.enabled true
          spark.ui.enabled true
          spark.ui.killenabled true
+         spark.executor.instances 4
+         spark.executor.memoryOverhead 600
          spark.ui.port 4040
        backup: yes
        owner: ubuntu
