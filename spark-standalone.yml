@@ -13,9 +13,10 @@
          export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
          export SPARK_MASTER_HOST=amazon-1
          export SPARK_WORKER_CORES=2
-         export SPARK_WORKER_INSTANCES=2
+         export SPARK_WORKER_INSTANCES=1
          export SPARK_WORKER_MEMORY=6G
-         export SPARK_EXECUTOR_INSTANCES=2
+         export SPARK_EXECUTOR_INSTANCES=5
+         export SPARK_EXECUTOR_INSTANCES=4G
        backup: yes
        owner: ubuntu         
    - name: Removing some lines in slaves start File
