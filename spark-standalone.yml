@@ -29,6 +29,8 @@
          amazon-2
          amazon-3
          amazon-4
+         amazon-5
+         amazon-6
        backup: yes
        owner: ubuntu
    - name: Installing jupyter apt
