@@ -4,9 +4,9 @@ fe00::0 ip6-localnet
 ff00::0 ip6-mcastprefix
 ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
-172.31.88.79	amazon-1
-172.31.80.94	amazon-2
-172.31.93.253	amazon-3
-172.31.92.182	amazon-4
-172.31.82.85	amazon-5
-172.31.93.65	amazon-6
+172.31.15.221	amazon-1
+172.31.14.189	amazon-2
+172.31.4.230	amazon-3
+172.31.3.101	amazon-4
+172.31.10.146	amazon-5
+172.31.9.144	amazon-6
