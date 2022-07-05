@@ -17,7 +17,7 @@
 
    - name: Extract  hadoop
      ansible.builtin.unarchive:
-       src: /home/ubuntu/hadoop-2.7.0.tar.gz
+       src: /home/ubuntu/hadoop-2.7.1.tar.gz
        dest: /home/ubuntu
        remote_src: True
        owner: ubuntu
@@ -28,7 +28,7 @@
 
 
    - name: changing directory from hadoop-3.1.1 to hadoop
-     raw: mv hadoop-2.7.0 hadoop/
+     raw: mv hadoop-2.7.1 hadoop/
 
    - name: Change permission 
      ansible.builtin.file:
