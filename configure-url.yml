@@ -22,6 +22,7 @@
        marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
        insertafter: "<configuration>"
        block: |
+         <configuration>
          <property>
          <name>mapred.job.tracker</name>
          <value>amazon-1:54311</value>
@@ -30,6 +31,7 @@
          <name>mapreduce.framework.name</name>
          <value>yarn</value>
          </property>
+         </configuration>
        backup: yes
        owner: ubuntu
 
