@@ -12,7 +12,7 @@
 
    - name: Get apache hadoop
      get_url: 
-       url: https://archive.apache.org/dist/hadoop/common/hadoop-2.7.0/hadoop-2.7.0.tar.gz
+       url: https://archive.apache.org/dist/hadoop/common/hadoop-2.7.1/hadoop-2.7.1.tar.gz
        dest: /home/ubuntu
 
    - name: Extract  hadoop
