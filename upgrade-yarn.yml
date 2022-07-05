@@ -7,6 +7,7 @@
        marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
        insertafter: "<configuration>"
        block: |
+         <configuration>
          <property>
          <name>mapred.job.tracker</name>
          <value>amazon-1:54311</value>
@@ -39,6 +40,7 @@
          <name>mapreduce.reduce.env</name>
          <value>HADOOP_MAPRED_HOME=$HADOOP_MAPRED_HOME</value>
          </property>
+         </configuration>
        backup: yes
        owner: ubuntu
 
