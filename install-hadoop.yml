@@ -202,7 +202,7 @@
    - name: Modifying slaves file
      
      ansible.builtin.blockinfile:
-       dest: /home/ubuntu/hadoop/etc/hadoop/workers
+       dest: /home/ubuntu/hadoop/etc/hadoop/slaves
        insertafter: EOF
        block: |
          amazon-2
