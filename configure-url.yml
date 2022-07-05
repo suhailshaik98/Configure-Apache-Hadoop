@@ -84,7 +84,7 @@
 
    - name: Removing some lines in slaves start File
      ansible.builtin.lineinfile:
-       path: /usr/local/hadoop/etc/hadoop/workers
+       path: /usr/local/hadoop/etc/hadoop/slaves
        regexp: 'localhost'
        line: ''
        backrefs: yes
@@ -102,7 +102,7 @@
    - name: Modifying slaves file
      
      ansible.builtin.blockinfile:
-       dest: /usr/local/hadoop/etc/hadoop/workers
+       dest: /usr/local/hadoop/etc/hadoop/slaves
        insertafter: EOF
        block: |
          amazon-2
