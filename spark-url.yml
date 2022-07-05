@@ -8,9 +8,9 @@
        insertafter: EOF
        block: |
          spark.master yarn
-         spark.driver.memory 2g
+         spark.driver.memory 5g
          spark.yarn.am.memory 1g
-         spark.executor.memory 5g
+         spark.executor.memory 6g
          spark.eventLog.enabled true
          spark.eventLog.dir hdfs://amazon-1:9000/spark-logs
          spark.history.provider org.apache.spark.deploy.history.FsHistoryProvider
