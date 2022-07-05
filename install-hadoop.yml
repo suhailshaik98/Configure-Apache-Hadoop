@@ -108,6 +108,9 @@
        backup: yes
        owner: ubuntu
 
+   - name: create file mapred-site.xml
+     raw: touch /home/ubuntu/hadoop/etc/hadoop/mapred-site.xml       
+
    - name: Editing mapred.xml File
      
      ansible.builtin.blockinfile:
@@ -220,10 +223,10 @@
        dest: /home/ubuntu/
        mode: '400'
        owner: ubuntu
-#   - name: Installing jupyter notebook
-#     apt:
-#       name: jupyter-notebook
-#       state: present
+   - name: Installing jupyter notebook
+     apt:
+       name: jupyter-notebook
+       state: present
 #   - name: Installing pip
 #     apt:
 #       name: python3-pip
