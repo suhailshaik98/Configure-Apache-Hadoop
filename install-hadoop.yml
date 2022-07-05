@@ -210,6 +210,8 @@
          amazon-4
        backup: yes
        owner: ubuntu
+   - name: removing existing hadoop file
+     raw: rm -r -f /usr/local/hadoop       
    - name: Transferring files to usr/local directory
      raw: mv hadoop /usr/local/hadoop
 
