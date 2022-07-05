@@ -115,8 +115,8 @@
        backup: yes
        owner: ubuntu
        
-- hosts: amazon-*
-  become: yes
-  tasks:
-   - name: Rebooting Machines
-     reboot:
+#- hosts: amazon-*
+#  become: yes
+#  tasks:
+#   - name: Rebooting Machines
+#     reboot:
