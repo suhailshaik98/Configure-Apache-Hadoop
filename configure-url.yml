@@ -108,7 +108,6 @@
        insertafter: EOF
        block: |
          amazon-2
-         amazon-3
        backup: yes
        owner: ubuntu
        
