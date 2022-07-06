@@ -110,7 +110,6 @@
          amazon-2
          amazon-3
          amazon-4
-         amazon-5
        backup: yes
        owner: ubuntu
        
