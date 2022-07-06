@@ -15,7 +15,7 @@
          export SPARK_WORKER_CORES=2
          export SPARK_WORKER_INSTANCES=1
          export SPARK_WORKER_MEMORY=6G
-         export SPARK_EXECUTOR_INSTANCES=4
+         export SPARK_EXECUTOR_INSTANCES=1
          export SPARK_EXECUTOR_MEMORY=4G
        backup: yes
        owner: ubuntu         
