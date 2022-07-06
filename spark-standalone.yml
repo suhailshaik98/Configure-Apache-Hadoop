@@ -15,7 +15,7 @@
          export SPARK_WORKER_CORES=2
          export SPARK_WORKER_INSTANCES=1
          export SPARK_WORKER_MEMORY=6G
-         export SPARK_EXECUTOR_INSTANCES=1
+         export SPARK_EXECUTOR_INSTANCES=5
          export SPARK_EXECUTOR_MEMORY=4G
        backup: yes
        owner: ubuntu         
@@ -32,6 +32,10 @@
        insertafter: EOF
        block: |
          amazon-2
+         amazon-3
+         amazon-4
+         amazon-5
+         amazon-6
        backup: yes
        owner: ubuntu
    - name: Installing jupyter apt
