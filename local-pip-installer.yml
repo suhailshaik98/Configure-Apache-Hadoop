@@ -1,0 +1,71 @@
+- hosts: amazon-*
+  become: yes
+  tasks:
+   - name: Installing pip
+     apt:
+       name: python3-pip
+       state: present
+   - name: Installing pip
+     apt:
+       name: python-pip
+       state: present
+   - name: install the package, force upgrade
+     pip:
+       name: pip
+       executable: pip3
+       state: latest       
+   - name: Installing findspark
+     pip:
+       name: findspark
+   - name: Installing tensorflow1.4.1
+     pip:
+       name: tensorflow==1.4.1
+       executable: pip3
+   - name: Installing tensorframes
+     pip:
+       name: tensorframes
+       executable: pip3
+   - name: Installing wrapt
+     pip:
+       name: wrapt
+       executable: pip3
+   - name: Installing pillow
+     pip:
+       name: pillow==5.1.0
+       executable: pip3
+   - name: Installing pandas
+     pip:
+       name: pandas==1.1.5
+       executable: pip3
+   - name: Installing h5py
+     pip:
+       name: h5py
+       executable: pip3
+   - name: Installing kafka
+     pip:
+       name: kafka
+       executable: pip2
+   - name: Installing py4j
+     pip:
+       name: py4j
+       executable: pip2
+   - name: Installing tensorflowonspark
+     pip:
+       name: tensorflowonspark
+       executable: pip2
+   - name: Installing jieba
+     pip:
+       name: jieba
+       executable: pip2
+   - name: Installing keras
+     pip:
+       name: keras==2.1.5
+       executable: pip3 
+   - name: Installing matplotlib
+     pip:
+       name: matplotlib
+       executable: pip2
+   - name: Installing numpy
+     pip:
+       name: numpy
+       executable: pip3    
