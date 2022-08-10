@@ -1,4 +1,4 @@
-- hosts: amazon-*
+- hosts: localvm-*
   become: yes
   tasks:
    - name: Installing pip
