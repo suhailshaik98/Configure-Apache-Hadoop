@@ -1,0 +1,57 @@
+- hosts: localvm-1
+  become: yes
+  tasks:
+   - name: Get apache zookeeper
+     unarchive: 
+       src: https://dlcdn.apache.org/drill/drill-1.19.0/apache-drill-1.19.0.tar.gz
+       dest: /home/suhail
+       remote_src: True 
+       owner: suhail
+   - name: Download drill
+     get_url: 
+       url:   https://dlcdn.apache.org/drill/drill-1.19.0/apache-drill-1.19.0.tar.gz
+       dest: /home/suhail
+       remote_src: yes
+       owner: suhail
+   - name: Get apache zeppelin
+     unarchive: 
+       src: https://dlcdn.apache.org/zeppelin/zeppelin-0.10.1/zeppelin-0.10.1-bin-all.tgz
+       dest: /home/suhail
+       remote_src: True 
+       owner: suhail          
+   - name: Deleting existing drill-override file
+     raw: rm -r -f /home/suhail/apache-drill-1.19.0/conf/drill-override.conf
+   - name: Creating drill-override file
+     raw: touch /home/suhail/apache-drill-1.19.0/conf/drill-override.conf     
+   - name: Editing drill-override.conf     
+     ansible.builtin.blockinfile:
+       dest: /home/suhail/apache-drill-1.19.0/conf/drill-override.conf
+       insertafter: EOF
+       block: |     
+          drill.exec:{
+            cluster-id: "cluster1",
+            zk.connect: "localvm-1:2181,localvm-2:2181,localvm-3:2181,localvm-4:2181"
+          }
+       backup: yes
+       owner: suhail 
+
+   - name: Get apache hadoop
+     get_url: 
+       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/drill-on-yarn.conf
+       dest: /home/suhail/apache-drill-1.19.0/conf
+       backup: yes
+       owner: suhail
+   - name: Editing drill-env.sh File
+     ansible.builtin.blockinfile:
+       dest: /home/suhail/apache-drill-1.19.0/conf/drill-env.sh
+       insertafter: EOF
+       block: |     
+         export HADOOP_HOME=/usr/local/hadoop
+         export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
+       backup: yes
+       owner: suhail
+       block: |     
+         export HADOOP_HOME=/usr/local/hadoop
+         export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
+       backup: yes
+       owner: suhail
