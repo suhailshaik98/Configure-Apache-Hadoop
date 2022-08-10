@@ -1,0 +1,121 @@
+- hosts: localvm-*
+  become_user: suhail
+  tasks:
+   - name: Editing core.xml File
+     
+     ansible.builtin.blockinfile:
+       dest: /usr/local/hadoop/etc/hadoop/core-site.xml
+       marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+       insertafter: "<configuration>"
+       block: |
+         <property>
+         <name>fs.defaultFS</name>
+         <value>hdfs://localvm-1:9000</value>
+         </property>
+       backup: yes
+       owner: suhail
+
+   - name: Editing mapred.xml File
+     
+     ansible.builtin.blockinfile:
+       dest: /usr/local/hadoop/etc/hadoop/mapred-site.xml
+       marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+       insertafter: "<configuration>"
+       block: |
+         <configuration>
+         <property>
+         <name>mapred.job.tracker</name>
+         <value>localvm-1:54311</value>
+         </property>
+         <property>
+         <name>mapreduce.framework.name</name>
+         <value>yarn</value>
+         </property>
+         </configuration>
+       backup: yes
+       owner: suhail
+
+
+   - name: Editing hdfs.xml File
+     
+     ansible.builtin.blockinfile:
+       dest: /usr/local/hadoop/etc/hadoop/hdfs-site.xml
+       marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+       insertafter: "<configuration>"
+       block: |
+         <property>
+         <name>dfs.replication</name>
+         <value>2</value>
+         </property>
+         <property>
+         <name>dfs.namenode.name.dir</name>
+         <value>file:///usr/local/hadoop/hdfs/data</value>
+         </property>
+         <property>
+         <name>dfs.datanode.data.dir</name>
+         <value>file:///usr/local/hadoop/hdfs/data</value>
+         </property>
+         <property>
+         <name>dfs.permissions</name>
+         <value>false</value>
+         </property>
+       backup: yes
+       owner: suhail
+
+   - name: Editing yarn-site.xml File
+     
+     ansible.builtin.blockinfile:
+       dest: /usr/local/hadoop/etc/hadoop/yarn-site.xml
+       marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+       insertafter: "<configuration>"
+       block: |
+         <property>
+         <name>yarn.nodemanager.aux-services</name>
+         <value>mapreduce_shuffle</value>
+         </property>
+         <property>
+         <name>yarn.nodemanager.aux-services.mapreduce.shuffle.class</name>
+         <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+         </property>
+         <property>
+         <name>yarn.resourcemanager.hostname</name>
+         <value>localvm-1</value>
+         </property>
+       backup: yes
+       owner: suhail
+
+   - name: Removing some lines in slaves start File
+     ansible.builtin.lineinfile:
+       path: /usr/local/hadoop/etc/hadoop/slaves
+       regexp: 'localhost'
+       line: ''
+       backrefs: yes
+       owner: suhail
+
+   - name: Modifying masters file
+     ansible.builtin.blockinfile:
+       dest: /usr/local/hadoop/etc/hadoop/masters
+       insertafter: EOF
+       block: |
+         localvm-1
+       backup: yes
+       owner: suhail
+
+   - name: Modifying slaves file
+     
+     ansible.builtin.blockinfile:
+       dest: /usr/local/hadoop/etc/hadoop/slaves
+       insertafter: EOF
+       block: |
+         localvm-2
+         localvm-3
+         localvm-4
+         localvm-5
+       backup: yes
+       owner: suhail
+       
+- hosts: localvm-*
+  become: yes
+  tasks:
+   - name: Rebooting Machines
+     reboot:
