@@ -1,0 +1,33 @@
+- hosts: localvm-*
+  become: yes
+  tasks:
+ 
+   - name: update spark-defaults File
+     ansible.builtin.blockinfile:
+       dest: /usr/local/spark/conf/spark-defaults.conf
+       insertafter: EOF
+       block: |
+         spark.master yarn
+         spark.driver.memory 5g
+         spark.yarn.am.memory 1g
+         spark.executor.memory 6g
+         spark.eventLog.enabled true
+         spark.eventLog.dir hdfs://localvm-1:9000/spark-logs
+         spark.history.provider org.apache.spark.deploy.history.FsHistoryProvider
+         spark.history.fs.logDirectory hdfs://localvm-1:9000/spark-logs
+         spark.history.fs.update.interval 10s
+         spark.history.ui.port 18080
+         spark.history.ui.enabled true
+         spark.ui.enabled true
+         spark.ui.killenabled true
+         spark.executor.instances 9
+         spark.executor.memoryOverhead 600
+         spark.ui.port 4040
+       backup: yes
+       owner: suhail
+   - name: Changing Hosts file
+     get_url: 
+       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/hosts
+       dest: /etc/hosts
+       backup: yes
+       owner: suhail
