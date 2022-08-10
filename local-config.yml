@@ -1,0 +1,243 @@
+- hosts: localvm-*
+  become: yes
+  pre_tasks:
+   - name: Run the equivalent of "apt-get update" as a separate step
+     apt:
+       update_cache: yes
+
+   - name: Installing java apt
+     apt:
+       name: openjdk-8-jdk-headless
+       state: present
+
+   - name: Get apache hadoop
+     get_url: 
+       url: https://archive.apache.org/dist/hadoop/common/hadoop-2.7.1/hadoop-2.7.1.tar.gz
+       dest: /home/suhail
+
+   - name: Extract  hadoop
+     ansible.builtin.unarchive:
+       src: /home/suhail/hadoop-2.7.1.tar.gz
+       dest: /home/suhail
+       remote_src: True
+       owner: suhail
+
+   - name: removing existing hadoop file
+     raw: rm -r -f hadoop
+
+
+
+   - name: changing directory from hadoop-3.1.1 to hadoop
+     raw: mv hadoop-2.7.1 hadoop/
+
+   - name: Change permission 
+     ansible.builtin.file:
+       path: /home/suhail/hadoop
+       state: directory
+       mode: '0755'
+       owner: suhail
+   - name: Make dir hdfstmp
+     ansible.builtin.file:
+       path: /home/suhail/hadoop/hdfs/data
+       state: directory
+       mode: '0700'
+       owner: suhail
+
+
+   - name: Changing Hosts file
+     get_url: 
+       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/hosts
+       dest: /etc/hosts
+       backup: yes
+       owner: suhail
+
+   - name: Editing Bash File
+     
+     ansible.builtin.blockinfile:
+       dest: .bashrc
+       insertafter: EOF
+       block: |
+         export HADOOP_HOME=/usr/local/hadoop
+         export PATH="/usr/local/bin:$PATH"
+         export PATH=$PATH:$HADOOP_HOME/bin
+         export PATH=$PATH:$HADOOP_HOME/sbin
+         export HADOOP_MAPRED_HOME=${HADOOP_HOME}
+         export HADOOP_COMMON_HOME=${HADOOP_HOME}
+         export HADOOP_HDFS_HOME=${HADOOP_HOME}
+         export YARN_HOME=${HADOOP_HOME}
+         export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
+         export SPARK_HOME=/usr/local/spark
+         export PYSPARK_PYTHON=python3
+         export PATH=$PATH:$SPARK_HOME/bin
+         export LD_LIBRARY_PATH=$HADOOP_HOME/lib/native:$LD_LIBRARY_PATH
+         export PYTHONPATH=$SPARK_HOME/python:$SPARK_HOME/python/build:$PYTHONPATH
+         export ZOO_HOME=/usr/local/zookeeper
+         export PATH=$ZOO_HOME/bin:$PATH
+          function sparknotebook()
+          {
+          export PYSPARK_PYTHON=python3
+          export SPARK_HOME=/usr/local/spark
+          export PYSPARK_DRIVER_PYTHON=jupyter
+          export PYSPARK_DRIVER_PYTHON_OPTS="notebook"
+          #$SPARK_HOME/bin/pyspark --packages databricks:spark-deep-learning:1.5.0-spark2.4-s_2.11
+          #$SPARK_HOME/bin/pyspark --master spark://localvm-1:7077
+          $SPARK_HOME/bin/pyspark
+          }         
+       backup: yes
+   - name: Editing hadoop-env.sh
+     
+     ansible.builtin.lineinfile:
+       dest: /home/suhail/hadoop/etc/hadoop/hadoop-env.sh
+       insertafter: EOF
+       line: export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+       backup: yes
+       owner: suhail
+
+
+
+  post_tasks:
+   - name: Editing core.xml File
+     
+     ansible.builtin.blockinfile:
+       dest: /home/suhail/hadoop/etc/hadoop/core-site.xml
+       marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+       insertafter: "<configuration>"
+       block: |
+         <property>
+         <name>fs.defaultFS</name>
+         <value>hdfs://localvm-1:9000</value>
+         </property>
+       backup: yes
+       owner: suhail
+
+   - name: create file mapred-site.xml
+     raw: touch /home/suhail/hadoop/etc/hadoop/mapred-site.xml       
+
+   - name: Editing mapred.xml File
+     
+     ansible.builtin.blockinfile:
+       dest: /home/suhail/hadoop/etc/hadoop/mapred-site.xml
+       marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+       insertafter: "<configuration>"
+       block: |
+         <property>
+         <name>mapred.job.tracker</name>
+         <value>localvm-1:54311</value>
+         </property>
+         <property>
+         <name>mapreduce.framework.name</name>
+         <value>yarn</value>
+         </property>
+       backup: yes
+       owner: suhail
+
+
+   - name: Editing hdfs.xml File
+     
+     ansible.builtin.blockinfile:
+       dest: /home/suhail/hadoop/etc/hadoop/hdfs-site.xml
+       marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+       insertafter: "<configuration>"
+       block: |
+         <property>
+         <name>dfs.replication</name>
+         <value>3</value>
+         </property>
+         <property>
+         <name>dfs.namenode.name.dir</name>
+         <value>file:///usr/local/hadoop/hdfs/data</value>
+         </property>
+         <property>
+         <name>dfs.datanode.data.dir</name>
+         <value>file:///usr/local/hadoop/hdfs/data</value>
+         </property>
+       backup: yes
+       owner: suhail
+   - name: Removing accessibility.properties
+     ansible.builtin.lineinfile:
+       path: /etc/java-8-openjdk/accessibility.properties
+       regexp: 'assistive_technologies=org.GNOME.Accessibility.AtkWrapper'
+       line: '#assistive_technologies=org.GNOME.Accessibility.AtkWrapper'
+       backrefs: yes
+       owner: suhail       
+
+   - name: Editing yarn-site.xml File
+     
+     ansible.builtin.blockinfile:
+       dest: /home/suhail/hadoop/etc/hadoop/yarn-site.xml
+       marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+       insertafter: "<configuration>"
+       block: |
+         <property>
+         <name>yarn.nodemanager.aux-services</name>
+         <value>mapreduce_shuffle</value>
+         </property>
+         <property>
+         <name>yarn.nodemanager.aux-services.mapreduce.shuffle.class</name>
+         <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+         </property>
+         <property>
+         <name>yarn.resourcemanager.hostname</name>
+         <value>localvm_1</value>
+         </property>
+       backup: yes
+       owner: suhail
+
+   - name: Make dir hadoop
+     raw: sudo chown suhail:suhail -R hadoop/hdfs/data
+   - name: Make dir hadoop2
+     raw: chmod 700 hadoop/hdfs/data
+
+   - name: create file masters
+     raw: touch /home/suhail/hadoop/etc/hadoop/masters
+
+
+   - name: Modifying masters file
+     ansible.builtin.blockinfile:
+       dest: /home/suhail/hadoop/etc/hadoop/masters
+       insertafter: EOF
+       block: |
+         localvm-1
+       backup: yes
+       owner: suhail
+
+   - name: Modifying slaves file
+     
+     ansible.builtin.blockinfile:
+       dest: /home/suhail/hadoop/etc/hadoop/slaves
+       insertafter: EOF
+       block: |
+         localvm-2
+         localvm-3
+         localvm-4
+       backup: yes
+       owner: suhail
+   - name: removing existing hadoop file
+     raw: rm -r -f /usr/local/hadoop       
+   - name: Transferring files to usr/local directory
+     raw: mv hadoop /usr/local/hadoop
+
+
+- hosts: localvm-1
+  become: yes
+  tasks:
+   - name: Changing permissions of the key
+     copy:
+       src: /cst4570_suhail.pem
+       dest: /home/suhail/
+       mode: '400'
+       owner: suhail
+   - name: Installing jupyter notebook
+     apt:
+       name: jupyter-notebook
+       state: present
+#   - name: Installing pip
+#     apt:
+#       name: python3-pip
+#       state: present
+#- hosts: localvm-1
+#  become_user: suhail
+#  tasks:
+#   - name: Installing pip
+#     pip:
+#       name: findspark
