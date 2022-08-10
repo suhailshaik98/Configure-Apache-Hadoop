@@ -1,0 +1,181 @@
+- hosts: localvm-*
+  become: yes
+  tasks:
+   - name: Get apache zookeeper
+     unarchive: 
+       src: https://archive.apache.org/dist/zookeeper/zookeeper-3.5.8/apache-zookeeper-3.5.8-bin.tar.gz
+       dest: /home/suhail
+       backup: yes
+       remote_src: true
+       owner: suhail           
+   - name: Changing name of the file zookeeper
+     raw: rm -r -f /etc/zookeeper       
+   - name: Removing from home file zookeeper
+     raw: rm -r -f zookeeper
+   - name: Changing name of the file zookeeper
+     raw: mv apache-zookeeper-3.5.8-bin zookeeper
+   - name: Changing name of the file zookeeper
+     raw: mkdir /etc/zookeeper     
+   - name: Changing name of the file zookeeper
+     raw: mkdir /etc/zookeeper/data
+   - name: Changing name of the file zookeeper
+     raw: mkdir /etc/zookeeper/conf     
+   - name: Creating zoo.cfg file
+     raw: touch /home/suhail/zookeeper/conf/zoo.cfg 
+   - name: Editing zoo.cfg File
+     ansible.builtin.blockinfile:
+       dest: /home/suhail/zookeeper/conf/zoo.cfg
+       block: |
+         tickTime=2000
+         dataDir=/etc/zookeeper/data
+         clientPort=2181
+         initLimit=5
+         syncLimit=2
+         server.1=localvm-1:2888:3888
+         server.2=localvm-2:2888:3888
+         server.3=localvm-3:2888:3888
+         server.4=localvm-4:2888:3888
+         server.5=localvm-5:2888:3888
+         server.6=localvm-6:2888:3888
+       backup: yes
+       owner: suhail 
+   - name: Creating myid file
+     raw: rm -r -f  /usr/share/zookeeper
+   - name: Creating myid file
+     raw: mv zookeeper /usr/share/zookeeper
+ 
+   - name: Remove zoo.cfg from etc
+     raw: rm -r -f  /etc/zookeeper/conf/zoo.cfg
+   - name: Remove zoo.cfg from etc
+     raw: rm -r -f  /etc/zookeeper/conf/myid     
+   - name: Creating zoo.cfg file
+     raw: touch /etc/zookeeper/conf/zoo.cfg    
+   - name: Editing zoo.cfg File
+     ansible.builtin.blockinfile:
+       dest: /etc/zookeeper/conf/zoo.cfg
+       block: |
+         tickTime=2000
+         dataDir=/etc/zookeeper/data
+         clientPort=2181
+         initLimit=5
+         syncLimit=2
+         server.1=localvm-1:2888:3888
+         server.2=localvm-2:2888:3888
+         server.3=localvm-3:2888:3888
+         server.4=localvm-4:2888:3888
+         server.5=localvm-5:2888:3888
+         server.6=localvm-6:2888:3888
+       backup: yes
+       owner: suhail
+
+   
+- hosts: localvm-3
+  become: yes
+  tasks:
+   - name: Download Myid
+     get_url: 
+       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/myid3
+       dest: /etc/zookeeper/data
+       backup: yes
+       owner: suhail
+   - name: Get apache hadoop
+     raw:  mv /etc/zookeeper/data/myid3 /etc/zookeeper/data/myid
+   - name: Download Myid
+     get_url: 
+       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/myid3
+       dest: /etc/zookeeper/conf
+       backup: yes
+       owner: suhail
+   - name: Get apache hadoop
+     raw:  mv /etc/zookeeper/conf/myid3 /etc/zookeeper/conf/myid
+- hosts: localvm-2
+  become: yes
+  tasks:
+   - name: Download Myid
+     get_url: 
+       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/myid2
+       dest: /etc/zookeeper/data
+       backup: yes
+       owner: suhail
+   - name: Get apache hadoop
+     raw:  mv /etc/zookeeper/data/myid2 /etc/zookeeper/data/myid
+   - name: Download Myid
+     get_url: 
+       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/myid2
+       dest: /etc/zookeeper/conf
+       backup: yes
+       owner: suhail
+   - name: Get apache hadoop
+     raw:  mv /etc/zookeeper/conf/myid2 /etc/zookeeper/conf/myid
+- hosts: localvm-1
+  become: yes
+  tasks:
+   - name: Download Myid
+     get_url: 
+       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/myid
+       dest: /etc/zookeeper/data
+       backup: yes
+       owner: suhail
+   - name: Download Myid
+     get_url: 
+       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/myid
+       dest: /etc/zookeeper/conf
+       backup: yes
+       owner: suhail
+- hosts: localvm-4
+  become: yes
+  tasks:
+   - name: Download Myid
+     get_url: 
+       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/myid4
+       dest: /etc/zookeeper/data
+       backup: yes
+       owner: suhail
+   - name: Get apache hadoop
+     raw:  mv /etc/zookeeper/data/myid4 /etc/zookeeper/data/myid
+   - name: Download Myid
+     get_url: 
+       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/myid4
+       dest: /etc/zookeeper/conf
+       backup: yes
+       owner: suhail
+   - name: Get apache hadoop
+     raw:  mv /etc/zookeeper/conf/myid4 /etc/zookeeper/conf/myid
+- hosts: localvm-5
+  become: yes
+  tasks:
+   - name: Download Myid
+     get_url: 
+       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/myid5
+       dest: /etc/zookeeper/data
+       backup: yes
+       owner: suhail
+   - name: Get apache hadoop
+     raw:  mv /etc/zookeeper/data/myid5 /etc/zookeeper/data/myid
+   - name: Download Myid
+     get_url: 
+       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/myid5
+       dest: /etc/zookeeper/conf
+       backup: yes
+       owner: suhail
+   - name: Get apache hadoop
+     raw:  mv /etc/zookeeper/conf/myid5 /etc/zookeeper/conf/myid
+- hosts: localvm-6
+  become: yes
+  tasks:
+   - name: Download Myid
+     get_url: 
+       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/myid6
+       dest: /etc/zookeeper/data
+       backup: yes
+       owner: suhail
+   - name: Get apache hadoop
+     raw:  mv /etc/zookeeper/data/myid6 /etc/zookeeper/data/myid
+   - name: Download Myid
+     get_url: 
+       url: https://github.com/suhailshaik98/Configure-Apache-Hadoop/raw/main/myid6
+       dest: /etc/zookeeper/conf
+       backup: yes
+       owner: suhail
+   - name: Get apache hadoop
+     raw:  mv /etc/zookeeper/conf/myid6 /etc/zookeeper/conf/myid 
