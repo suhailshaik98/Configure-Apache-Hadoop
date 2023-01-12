@@ -1,3 +1,7 @@
+Please find the research report here.
+https://github.com/suhailshaik98/Configure-Apache-Hadoop/blob/main/Research%20Report.pdf
+
+
 USING ANSIBLE TO DEPLOY HADOOP AND SPARK WORKING ENVIRONMENT
 
 How is Ansible useful for deploying Hadoop?
@@ -14,5 +18,5 @@ What do the file names mean?
 Things that can be improved
 •	Maintaining a proper repository with subdirectories will help reduce the confusion and give a better interpretation of what was being tried to be done.
 •	Directly communicating the command line interface of AWS and GCP for the commissioning of machines would provide more automation for this process
-Please find the research report here.
+
 
