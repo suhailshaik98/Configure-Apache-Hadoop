@@ -1,0 +1,13 @@
+- hosts: localvm-*
+  become: yes
+  tasks:
+    - name: Get frp from github
+     get_url: 
+       url: https://github.com/fatedier/frp/releases/download/v0.47.0/frp_0.47.0_linux_amd64.tar.gz
+       dest: /home/ubuntu
+   - name: Extract  frp
+     ansible.builtin.unarchive:
+       src: /home/ubuntu/frp_0.47.0_linux_amd64.tar.gz
+       dest: /home/ubuntu
+       remote_src: True
+       owner: ubuntu
