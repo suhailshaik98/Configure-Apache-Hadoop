@@ -1,4 +1,4 @@
-- hosts: localvm-*
+- hosts: amazon-1
   become: yes
   tasks:
     - name: Get frp from github
