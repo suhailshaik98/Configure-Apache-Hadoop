@@ -11,3 +11,6 @@
         dest: /home/ubuntu
         remote_src: True
         owner: ubuntu
+    - name: Install snap novnc
+      snap:
+        name: novnc     
